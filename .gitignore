@@ -1,4 +1,12 @@
+# Private
 .env
+
+# Logs
 logs
-__pycache__
+
+# Test
 test.py
+
+# Cache
+.DS_Store
+__pycache__
