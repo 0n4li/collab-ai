@@ -1,11 +1,8 @@
-from typing import Optional
-import re
-import hashlib
 from pathlib import Path
 
 from api.prompts import system_prompt, initial_response_prompt, perspective_prompt, discussion_prompt, perspective_and_discussion_prompt, final_response_prompt
 from api.api_model import APIModel
-from api.logging_config import setup_app_logger, setup_conversation_logger
+from api.logging_config import setup_app_logger, setup_conversation_logger, setup_noop_logger
 
 # Set up application logger
 logger = setup_app_logger(__name__)
@@ -38,6 +35,8 @@ class DebateAPIModel:
 
     def _setup_conversation_logger(self, log_dir: Path=None, log_filename: str=None):
         """Set up a new logger for the current conversation."""
+        if log_filename is None:
+            return setup_noop_logger()
         return setup_conversation_logger(self.model1_name, self.model2_name, log_dir=log_dir, log_filename=log_filename)
 
     def _format_initial_response_prompt(self, user_question: str) -> str:
