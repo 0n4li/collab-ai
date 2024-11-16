@@ -1,20 +1,31 @@
+from __future__ import annotations
+
 import logging
 import re
-from logging.handlers import RotatingFileHandler
 from datetime import datetime
+from logging.handlers import RotatingFileHandler
 from pathlib import Path
+from typing import Optional, Union, List
 
-# Get the project root directory (parent of src)
+# Log Directory Configuration
 PROJECT_ROOT = Path(__file__).parent.parent.parent
-
-# Define log directories
 LOG_DIR = PROJECT_ROOT / "logs"
 APP_LOG_DIR = LOG_DIR / "app"
 CONVERSATION_LOG_DIR = LOG_DIR / "conversations"
 
-# Constants for log rotation
+# Log Rotation Configuration
 MAX_LOG_SIZE = 10 * 1024 * 1024  # 10MB
 BACKUP_COUNT = 5
+
+# Logging Format Configuration
+DEFAULT_LOG_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+
+# Define valid log levels for type hints
+LogLevel = Union[int, str]  # 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL' or their integer values
+
+class LoggingError(Exception):
+    """Custom exception for logging-related errors."""
+    pass
 
 def sanitize_filename(name: str) -> str:
     """
@@ -24,126 +35,204 @@ def sanitize_filename(name: str) -> str:
         name: The string to convert into a safe filename
         
     Returns:
-        A string safe to use as a filename
+        str: A string safe to use as a filename
     """
-    # Replace any non-alphanumeric characters (except hyphens and underscores) with underscores
     return re.sub(r'[^\w\-]', '_', name)
 
-def ensure_log_directories():
-    """Ensure all required log directories exist."""
-    LOG_DIR.mkdir(exist_ok=True)
-    APP_LOG_DIR.mkdir(exist_ok=True)
-    CONVERSATION_LOG_DIR.mkdir(exist_ok=True)
+def ensure_directory(path: Path) -> None:
+    """
+    Ensure a directory exists, creating it and its parents if necessary.
     
-def ensure_directory(path: Path):
-    """Ensure a directory exists."""
-    path.mkdir(parents=True, exist_ok=True)
+    Args:
+        path: Path to the directory to ensure
+        
+    Raises:
+        LoggingError: If directory creation fails
+    """
+    try:
+        path.mkdir(parents=True, exist_ok=True)
+    except Exception as e:
+        raise LoggingError(f"Failed to create directory {path}: {str(e)}")
 
-def setup_app_logger(name: str) -> logging.Logger:
+def get_log_level(level: LogLevel) -> int:
+    """
+    Convert string log level to corresponding integer value.
+    
+    Args:
+        level: Log level as string or int
+        
+    Returns:
+        int: Numeric log level
+    """
+    if isinstance(level, str):
+        return getattr(logging, level.upper())
+    return level
+
+def create_rotating_handler(
+    log_file: Path,
+    formatter: logging.Formatter,
+    log_level: LogLevel
+) -> logging.Handler:
+    """
+    Create a rotating file handler with the specified configuration.
+    
+    Args:
+        log_file: Path to the log file
+        formatter: Log formatter to use
+        log_level: Logging level
+        
+    Returns:
+        logging.Handler: Configured rotating file handler
+    """
+    handler = RotatingFileHandler(
+        log_file,
+        maxBytes=MAX_LOG_SIZE,
+        backupCount=BACKUP_COUNT
+    )
+    handler.setFormatter(formatter)
+    handler.setLevel(get_log_level(log_level))
+    return handler
+
+def setup_base_logger(
+    name: str,
+    log_level: LogLevel,
+    handlers: List[logging.Handler],
+    propagate: bool = False
+) -> logging.Logger:
+    """
+    Set up a base logger with the specified configuration.
+    
+    Args:
+        name: Logger name
+        log_level: Logging level
+        handlers: List of handlers to attach
+        propagate: Whether to propagate messages to parent loggers
+        
+    Returns:
+        logging.Logger: Configured logger instance
+    """
+    logger = logging.getLogger(name)
+    logger.setLevel(get_log_level(log_level))
+    
+    # Remove existing handlers if any
+    for handler in logger.handlers[:]:
+        logger.removeHandler(handler)
+    
+    # Add new handlers
+    for handler in handlers:
+        logger.addHandler(handler)
+    
+    logger.propagate = propagate
+    return logger
+
+class MarkdownFormatter(logging.Formatter):
+    """Custom formatter for markdown-formatted log entries."""
+    
+    def format(self, record: logging.LogRecord) -> str:
+        """Format the log record in markdown format."""
+        timestamp = datetime.fromtimestamp(record.created).strftime('%Y-%m-%d %H:%M:%S')
+        message = record.getMessage()
+        return f"[//]: # ({timestamp})\n{message}\n"
+
+def setup_app_logger(
+    name: str,
+    log_level: LogLevel = 'INFO',
+    print_debug: bool = False,
+    custom_format: Optional[str] = None
+) -> logging.Logger:
     """
     Set up application-level logger with rotation.
     
     Args:
         name: Name of the logger
+        log_level: Logging level (default: 'INFO')
+        print_debug: Whether to propagate messages to parent loggers
+        custom_format: Custom logging format string
         
     Returns:
-        Configured logger instance
+        logging.Logger: Configured logger instance
+        
+    Raises:
+        LoggingError: If logger setup fails
     """
-    # Ensure directories exist
-    ensure_log_directories()
+    try:
+        ensure_directory(APP_LOG_DIR)
+        
+        # Create formatter
+        formatter = logging.Formatter(custom_format or DEFAULT_LOG_FORMAT)
+        
+        # Create handlers
+        handlers = [
+            # logging.StreamHandler(),  # Console handler
+            create_rotating_handler(  # File handler
+                APP_LOG_DIR / f"{sanitize_filename(name)}.log",
+                formatter,
+                log_level
+            )
+        ]
+        
+        # Configure console handler
+        handlers[0].setFormatter(formatter)
+        handlers[0].setLevel(get_log_level(log_level))
+        
+        return setup_base_logger(name, log_level, handlers, print_debug)
     
-    logger = logging.getLogger(name)
-    logger.setLevel(logging.INFO)
+    except Exception as e:
+        raise LoggingError(f"Failed to setup app logger: {str(e)}")
 
-    # Avoid adding handlers if they already exist
-    if not logger.handlers:
-        # Console handler
-        console_handler = logging.StreamHandler()
-        console_handler.setLevel(logging.INFO)
-        console_formatter = logging.Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-        )
-        console_handler.setFormatter(console_formatter)
-        logger.addHandler(console_handler)
-
-        # File handler with rotation
-        log_file = APP_LOG_DIR / f"{sanitize_filename(name)}.log"
-        file_handler = RotatingFileHandler(
-            log_file,
-            maxBytes=MAX_LOG_SIZE,
-            backupCount=BACKUP_COUNT
-        )
-        file_handler.setLevel(logging.INFO)
-        file_formatter = logging.Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-        )
-        file_handler.setFormatter(file_formatter)
-        logger.addHandler(file_handler)
-
-    return logger
-
-class MarkdownFormatter(logging.Formatter):
-    
-    def format(self, record):
-        timestamp = datetime.fromtimestamp(record.created).strftime('%Y-%m-%d %H:%M:%S')
-        message = record.getMessage()
-        formatted_message = f"[//]: # ({timestamp})\n{message}\n"    
-        return formatted_message
-
-def setup_conversation_logger(model1_name: str, model2_name: str, log_dir: Path = None, log_filename: str = None) -> logging.Logger:
+def setup_conversation_logger(
+    model1_name: str,
+    model2_name: str,
+    log_dir: Optional[Path] = None,
+    log_filename: Optional[str] = None,
+    log_level: LogLevel = 'INFO'
+) -> logging.Logger:
     """
-    Set up a new logger for a specific conversation with rotation, outputting in markdown format.
+    Set up a new logger for a specific conversation with rotation.
     
     Args:
         model1_name: Name of the first model
         model2_name: Name of the second model
+        log_dir: Custom directory for logs (default: CONVERSATION_LOG_DIR)
+        log_filename: Custom filename for the log file
+        log_level: Logging level (default: 'INFO')
         
     Returns:
-        Configured logger instance
+        logging.Logger: Configured logger instance
+        
+    Raises:
+        LoggingError: If logger setup fails
     """
-    # Ensure directories exist
-    ensure_log_directories()
+    try:
+        log_dir = log_dir or CONVERSATION_LOG_DIR
+        ensure_directory(log_dir)
+        
+        # Generate logger name and file path
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        logger_name = f"conversation_{timestamp}"
+        
+        if not log_filename:
+            safe_model1_name = sanitize_filename(model1_name)
+            safe_model2_name = sanitize_filename(model2_name)
+            log_filename = f"{logger_name}_{safe_model1_name}_{safe_model2_name}.md"
+        
+        log_file = log_dir / log_filename
+        
+        # Write markdown header if file doesn't exist
+        if not log_file.exists():
+            with open(log_file, 'w') as f:
+                f.write(f"_Conversation Log: {model1_name} and {model2_name}_\\\n")
+                f.write(f"_Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}_\n")
+                f.write("\n---\n\n")
+        
+        # Create formatter and handler
+        formatter = MarkdownFormatter()
+        handler = create_rotating_handler(log_file, formatter, log_level)
+        
+        return setup_base_logger(logger_name, log_level, [handler], False)
     
-    # Ensure Conversation Log Directory
-    if not log_dir:
-        log_dir = CONVERSATION_LOG_DIR
-    ensure_directory(log_dir)
-    
-    # Sanitize model names for filename
-    safe_model1_name = sanitize_filename(model1_name)
-    safe_model2_name = sanitize_filename(model2_name)
-    
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    logger_name = f"conversation_{timestamp}"
-    logger = logging.getLogger(logger_name)
-    logger.setLevel(logging.INFO)
-
-    # Create a new markdown file for this conversation
-    if not log_filename:
-        log_filename = f"{logger_name}_{safe_model1_name}_{safe_model2_name}.md"
-    log_file = log_dir / log_filename
-    
-    # Write markdown header when creating the file
-    if not log_file.exists():
-        with open(log_file, 'w') as f:
-            f.write(f"_Conversation Log: {model1_name} and {model2_name}_\\\n")
-            f.write(f"_Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}_\n")
-            f.write("\n---\n\n")
-    
-    file_handler = RotatingFileHandler(
-        log_file,
-        maxBytes=MAX_LOG_SIZE,
-        backupCount=BACKUP_COUNT
-    )
-    file_handler.setLevel(logging.INFO)
-    
-    formatter = MarkdownFormatter()
-    file_handler.setFormatter(formatter)
-    logger.addHandler(file_handler)
-    
-    logger.propagate = False
-
-    return logger
+    except Exception as e:
+        raise LoggingError(f"Failed to setup conversation logger: {str(e)}")
 
 def get_conversation_logs_path() -> Path:
     """Get the path to conversation logs directory."""
@@ -154,4 +243,5 @@ def get_app_logs_path() -> Path:
     return APP_LOG_DIR
 
 def setup_noop_logger() -> logging.Logger:
-    return logging.Logger("noop")
+    """Set up a no-operation logger that doesn't output anything."""
+    return logging.getLogger("noop")
