@@ -8,7 +8,7 @@ from api.logging_config import setup_app_logger, setup_conversation_logger, setu
 logger = setup_app_logger(__name__)
 
 class DebateAPIModel:
-    def __init__(self, model1_name: str, model2_name: str, user_instructions: str):
+    def __init__(self, model1_name: str, model2_name: str):
         """
         Initialize two AI models for natural dialogue-based discussion.
 
@@ -17,8 +17,6 @@ class DebateAPIModel:
             model2_name: Name of the second model
             user_instructions: Base instructions for the models
         """
-        self.user_instructions = user_instructions
-        self.debate_prompt = system_prompt.format(user_instructions)
         self.initial_response_prompt = initial_response_prompt
         self.perspective_prompt = perspective_prompt
         self.discussion_prompt = discussion_prompt
@@ -66,8 +64,11 @@ class DebateAPIModel:
         elif "agree" in response_lower:
             return "agree"
         return "unknown"
+    
+    def _generate_debate_prompt(user_instructions: str = None) -> str:
+        return system_prompt.format(user_instructions)
 
-    def get_response(self, user_question: str, log_dir: Path = None, log_filename: str = None) -> str:
+    def get_response(self, user_question: str, user_instructions: str = None, log_dir: Path = None, log_filename: str = None) -> str:
         """
         Get response through natural discussion between models.
 
@@ -86,7 +87,8 @@ class DebateAPIModel:
         conv_logger.info(f"---\n")
         print("User Question:\n", user_question, "\n")
 
-        self.start(user_instructions=self.debate_prompt)
+        debate_prompt = self._generate_debate_prompt(user_instructions)
+        self.start(user_instructions=debate_prompt)
 
         # Initial perspectives
         print(f"Getting initial Response from {self.model1_name}")
@@ -149,7 +151,7 @@ class DebateAPIModel:
         conv_logger.info(f'\n---\n\n')
         print(f"Agreement status: {agreement_status} - Model 1 ({status1}) / Model 2 ({status2})")
 
-        self.start(user_instructions=self.user_instructions)
+        self.start(user_instructions=user_instructions)
         
         conv_logger.info(f"*Full transcript*:\n\n{transcript}\n")
         conv_logger.info(f'\n---\n\n')
