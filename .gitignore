@@ -2,11 +2,18 @@
 .env
 
 # Logs
-logs
+logs/*
+!logs/.gitkeep
+!logs/app/.gitkeep
+!logs/conversations/.gitkeep
 
 # Test
-test.py
+test*.py
 
 # Cache
 .DS_Store
-__pycache__
+__pycache__/
+
+# Editor
+.vscode/*
+logs/.gitkeep
