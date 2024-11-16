@@ -54,16 +54,18 @@ def format_example(question, options, question_number, cot_content=""):
     return example
 
 def build_prompt(category, example_questions):
-    prompt = f"The following are example multiple choice questions (with answers) about {category}:"
+    prompt = f"The following are example multiple choice questions (with answers) about {category}:\n\n"
     question_number = 1
     for each in example_questions:
         prompt += format_example(each["question"], each["options"], question_number, each["cot_content"])
         question_number += 1
-    prompt += "The user is expected to ask a similar kind of question along with options for the correct answer."
-    prompt += "You are supposed to deliberate, think step by step and then answer the user's question by choosing from the provided options."
-    prompt += "Before choosing the answer, please present your indepth analysis."
-    prompt += "If you are able to choose the correct answer from the provided options, please output the answer as `The answer is (X)` in the end."
-    prompt += "However, if you are unable to choose the correct answer, please output `I cannot determine the answer`."
+    prompt += "\n\n"
+    prompt += "The user is expected to ask a similar kind of question along with options for the correct answer.\n\n"
+    prompt += "You are supposed to deliberate, think step by step and then answer the user's question by choosing from the provided options.\n\n"
+    prompt += "Before choosing the answer, please present your indepth analysis.\n\n"
+    prompt += "If you are able to choose the correct answer from the provided options, please output the answer as `The answer is (X)` in the end.\n\n"
+    prompt += "However, if you are unable to choose the correct answer, please output `I cannot determine the answer`.\n\n"
+    return prompt
 
 
 def single_request(client, single_question, cot_examples_dict, exist_results, log_dir:Path=None):
