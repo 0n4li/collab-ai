@@ -99,7 +99,7 @@ class DebateAPIModel:
         transcript+=f"Model 1 Initial Response:\n\n{model1_initial_response}\n\n"
 
         print(f"Getting initial Response from {self.model2_name}")
-        model2_initial_response = self.model2.send_message(self._format_discussion_prompt(user_question))
+        model2_initial_response = self.model2.send_message(self._format_initial_response_prompt(user_question))
         conv_logger.info(f"### {self.model2_name} Initial Response:\n")
         conv_logger.info(f"{model2_initial_response}\n")
         conv_logger.info(f"---\n")
