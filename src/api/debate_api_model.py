@@ -6,6 +6,7 @@ from api.logging_config import setup_app_logger, setup_conversation_logger, setu
 
 # Set up application logger
 logger = setup_app_logger(__name__)
+separater = "\n---\n\n"
 
 class DebateAPIModel:
     def __init__(self, model1_name: str, model2_name: str):
@@ -35,7 +36,16 @@ class DebateAPIModel:
         """Set up a new logger for the current conversation."""
         if log_filename is None:
             return setup_noop_logger()
-        return setup_conversation_logger(self.model1_name, self.model2_name, log_dir=log_dir, log_filename=log_filename)
+        self.conv_logger = setup_conversation_logger(self.model1_name, self.model2_name, log_dir=log_dir, log_filename=log_filename)
+
+    def _close_conversation_logger(self):
+        """Close the current conversation logger."""
+        if self.conv_logger:
+            # Close the conversation logger
+            for handler in self.conv_logger.handlers[:]:
+                handler.close()
+                self.conv_logger.removeHandler(handler)
+                self.conv_logger = None
 
     def _format_initial_response_prompt(self, user_question: str) -> str:
         return self.initial_response_prompt.format(user_question)
@@ -67,6 +77,11 @@ class DebateAPIModel:
     
     def _generate_debate_prompt(user_instructions: str = None) -> str:
         return system_prompt.format(user_instructions)
+    
+    def _clog(self, message: str):
+        if self.conv_logger:
+            self.conv_logger.info(f"{message}\n")
+
 
     def get_response(self, user_question: str, user_instructions: str = None, log_dir: Path = None, log_filename: str = None) -> str:
         """
@@ -79,13 +94,19 @@ class DebateAPIModel:
             Final synthesized response
         """
         
-        transcript = f"User Question:\n\n{user_question}\n\n"
+        self._setup_conversation_logger(log_dir=log_dir, log_filename=log_filename)
         
-        conv_logger = self._setup_conversation_logger(log_dir=log_dir, log_filename=log_filename)
-        conv_logger.info(f"## User Question\n")
-        conv_logger.info(f"{user_question}\n")
-        conv_logger.info(f"---\n")
-        print("User Question:\n", user_question, "\n")
+        self._clog(f"## User Instructions")
+        self._clog(user_instructions)
+        self._clog(separater)
+        # print(f"User Instructions:\n{user_instructions}")
+        
+        self._clog(f"## User Question")
+        self._clog(user_question)
+        self._clog(separater)
+        print(f"User Question:\n{user_question}")
+        
+        transcript = f"User Question:\n\n{user_question}\n\n"
 
         debate_prompt = self._generate_debate_prompt(user_instructions)
         self.start(user_instructions=debate_prompt)
@@ -93,18 +114,18 @@ class DebateAPIModel:
         # Initial perspectives
         print(f"Getting initial Response from {self.model1_name}")
         model1_initial_response = self.model1.send_message(self._format_initial_response_prompt(user_question))
-        conv_logger.info(f"### {self.model1_name} Initial Response:\n")
-        conv_logger.info(f"{model1_initial_response}\n")
-        conv_logger.info(f"---\n")
+        self._clog(f"### {self.model1_name} Initial Response:")
+        self._clog(model1_initial_response)
+        self._clog(separater)
         print(f"{self.model1_name} gave an initial response")
         
         transcript+=f"Model 1 Initial Response:\n\n{model1_initial_response}\n\n"
 
         print(f"Getting initial Response from {self.model2_name}")
         model2_initial_response = self.model2.send_message(self._format_initial_response_prompt(user_question))
-        conv_logger.info(f"### {self.model2_name} Initial Response:\n")
-        conv_logger.info(f"{model2_initial_response}\n")
-        conv_logger.info(f"---\n")
+        self._clog(f"### {self.model2_name} Initial Response:")
+        self._clog(model2_initial_response)
+        self._clog(separater)
         print(f"{self.model2_name} gave an initial response")
         
         transcript+=f"Model 2 Initial Response:\n\n{model2_initial_response}\n\n"
@@ -119,8 +140,9 @@ class DebateAPIModel:
                 self._format_perspective_prompt(model2_initial_response) if current_round == 0 else
                 self._format_discussion_prompt(model2_response_discussion)
             )
-            conv_logger.info(f"### {self.model1_name} Discussion Response Round {current_round + 1}:\n{model1_response_discussion}\n")
-            conv_logger.info(f'\n---\n\n')
+            self._clog(f"### {self.model1_name} Discussion Response Round {current_round + 1}:")
+            self._clog(model1_response_discussion)
+            self._clog(separater)
             transcript+=f"Model 1 Discussion Round {(current_round + 1)}:\n\n{model1_response_discussion}\n\n"
 
             # Check Model 1's agreement status
@@ -132,8 +154,9 @@ class DebateAPIModel:
                 self._format_perspective_and_discussion_prompt(model1_initial_response, model1_response_discussion) if current_round == 0 else
                 self._format_discussion_prompt(model1_response_discussion)
             )
-            conv_logger.info(f"### {self.model2_name} Discussion Response Round {current_round + 1}:\n{model2_response_discussion}\n")
-            conv_logger.info(f'\n---\n\n')
+            self._clog(f"### {self.model2_name} Discussion Response Round {current_round + 1}:")
+            self._clog(model2_response_discussion)
+            self._clog(separater)
             transcript+=f"Model 2 Discussion Round {(current_round + 1)}:\n\n{model2_response_discussion}\n\n"
 
             # Check Model 2's agreement status
@@ -147,30 +170,33 @@ class DebateAPIModel:
             
             current_round += 1
 
-        conv_logger.info(f"*Agreement Status*: {agreement_status} - Model 1 ({status1}) / Model 2 ({status2})")
-        conv_logger.info(f'\n---\n\n')
+        self._clog(f"## Agreement Status:")
+        self._clog(f"Agreement status: {agreement_status} - Model 1 ({status1}) / Model 2 ({status2})")
+        self._clog(separater)
         print(f"Agreement status: {agreement_status} - Model 1 ({status1}) / Model 2 ({status2})")
 
         self.start(user_instructions=user_instructions)
         
-        conv_logger.info(f"*Full transcript*:\n\n{transcript}\n")
-        conv_logger.info(f'\n---\n\n')
-        print(f"*Full transcript*:\n\n{transcript}\n")
+        self._clog(f"## Full transcript:")
+        self._clog(transcript)
+        self._clog(separater)
+        # print(f"Full transcript:\n\n{transcript}\n")
         
         final_response_prompt = self._format_final_response_prompt(user_question, transcript)
         
         model1_final_response = self.model1.send_message(final_response_prompt)
-        conv_logger.info(f"## {self.model1_name} Collaborative Answer:\n\n{model1_final_response}\n")
+        self._clog(f"## {self.model1_name} Collaborative Answer:")
+        self._clog(model1_final_response)
+        self._clog(separater)
         print(f"{self.model1_name} collaborative answer received")
 
         model2_final_response = self.model2.send_message(final_response_prompt)
-        conv_logger.info(f"## {self.model2_name} Collaborative Answer:\n\n{model2_final_response}\n")
+        self._clog(f"## {self.model2_name} Collaborative Answer:")
+        self._clog(model2_final_response)
+        self._clog(separater)
         print(f"{self.model2_name} collaborative answer received")
 
-        # Close the conversation logger
-        for handler in conv_logger.handlers[:]:
-            handler.close()
-            conv_logger.removeHandler(handler)
+        self._close_conversation_logger()
 
         return model1_final_response, model2_final_response, model1_initial_response, model2_initial_response
 
