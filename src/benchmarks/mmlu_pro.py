@@ -53,6 +53,18 @@ def format_example(question, options, question_number, cot_content=""):
         example += "Answer: " + cot_content + "\n\n"
     return example
 
+def build_prompt(category, example_questions):
+    prompt = f"The following are example multiple choice questions (with answers) about {category}:"
+    question_number = 1
+    for each in example_questions:
+        prompt += format_example(each["question"], each["options"], question_number, each["cot_content"])
+        question_number += 1
+    prompt += "The user is expected to ask a similar kind of question along with options for the correct answer."
+    prompt += "You are supposed to deliberate, think step by step and then answer the user's question by choosing from the provided options."
+    prompt += "Before choosing the answer, please present your indepth analysis."
+    prompt += "If you are able to choose the correct answer from the provided options, please output the answer as `The answer is (X)` in the end."
+    prompt += "However, if you are unable to choose the correct answer, please output `I cannot determine the answer`."
+
 
 def single_request(client, single_question, cot_examples_dict, exist_results, log_dir:Path=None):
     exist = True
@@ -72,19 +84,13 @@ def single_request(client, single_question, cot_examples_dict, exist_results, lo
     exist = False
     category = single_question["category"]
     cot_examples = cot_examples_dict[category]
+    prompt = build_prompt(category, cot_examples)
     question = single_question["question"]
     options = single_question["options"]
-    prompt = "The following are multiple choice questions (with answers) about {}. Think step by" \
-             " step and then output the answer in the format of \"The answer is (X)\" at the end.\n\n" \
-        .format(category)
-    question_number = 1
-    for each in cot_examples:
-        prompt += format_example(each["question"], each["options"], question_number, each["cot_content"])
-        question_number += 1
-    input_text = format_example(question, options, question_number)
-    input_text += f"\n\nVERY IMPORTANT INSTRUCTION: In your final response only provide the analysis and answer for Question {question_number} (The earlier questions are only meant as examples of correct answers and are not to be discussed further). Always clearly state your answer as \"The answer is (X)\" at the end.\n"
+    input_text = format_example(question, options, "from user")
     try:
         log_filename = f"Question#{q_id}.md"
+        print(f"Question#{q_id} being attempted")
         final_response1, final_response2, initial_response1, initial_response2 = call_api(client, prompt, input_text, log_dir=log_dir, log_filename=log_filename)
         pred1 = extract_answer(final_response1)
         pred2 = extract_answer(final_response2)
@@ -133,17 +139,16 @@ def save_summary(filepath, summary):
 
 def call_api(client, prompt, input_text, log_dir: Path = None, log_filename: str = None):
     start = time.time()
-    message_text = prompt + input_text
-    result1, result2, initial_result1, initial_result2 = client.get_response(message_text, log_dir=log_dir, log_filename=log_filename)
+    result1, result2, initial_result1, initial_result2 = client.get_response(input_text, user_instructions=prompt, log_dir=log_dir, log_filename=log_filename)
     print("cost time", time.time() - start)
     return result1, result2, initial_result1, initial_result2
 
 
-def get_client(user_instructions=""):
-    return DebateAPIModel(model1_name=parsed_args.model1_name, model2_name=parsed_args.model2_name, user_instructions=user_instructions)
+def get_client():
+    return DebateAPIModel(model1_name=parsed_args.model1_name, model2_name=parsed_args.model2_name)
 
 def evaluate(subjects):
-    client = get_client(user_instructions="When giving the final response, present your analysis and answer the question as `The answer is (X)` at the end.")
+    client = get_client()
     test_df, dev_df = load_mmlu_pro()
     if not subjects:
         subjects = list(test_df.keys())
