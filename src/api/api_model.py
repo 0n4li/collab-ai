@@ -4,11 +4,9 @@ from dotenv import load_dotenv
 import logging
 
 from api.api_request_handler import APIRequestHandler
+from api.logging_config import setup_app_logger
 
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s: %(message)s"
-)
-logger = logging.getLogger(__name__)
+logger = setup_app_logger(__name__)
 
 
 class APIModel:
@@ -38,6 +36,9 @@ class APIModel:
         logger.info("APIModel initialized.")
 
     def send_message(self, user_message: str) -> str:
+        
+        logger.info(f"Sending message to API:\n\n{user_message}\n\n")
+        
         # Build the conversation payload
         self.messages.append({"role": "user", "content": user_message})
         data = {"model": self.model, "messages": self.messages, "stream": False}
@@ -55,6 +56,8 @@ class APIModel:
                 payload=data,
                 additional_headers=headers,
             )
+            
+            logger.info(f"Received response from API:\n\n{response_data}\n\n")
 
             if 'error' in response_data:
                 error_info = response_data['error']
