@@ -10,7 +10,7 @@ logger = setup_app_logger(__name__)
 
 
 class APIModel:
-    def __init__(self, model: str, system_prompt: str = None):
+    def __init__(self, model: str):
         # Load environment variables
         load_dotenv()
 
@@ -28,11 +28,6 @@ class APIModel:
         if not self.api_key:
             raise ValueError("ROUTER_API_KEY environment variable not set")
 
-        # System prompt and messages
-        self.system_prompt = system_prompt
-        self.messages = []
-        if self.system_prompt:
-            self.messages.append({"role": "system", "content": self.system_prompt})
         logger.info("APIModel initialized.")
 
     def send_message(self, user_message: str) -> str:
@@ -87,11 +82,11 @@ class APIModel:
             logger.error(f"Unexpected error: {str(e)}")
             return "An unexpected error occurred. Please try again later."
 
-    def start_conversation(self):
+    def start_conversation(self, system_prompt: str = None):
         logger.info("Starting a new conversation.")
         self.messages = (
-            [{"role": "system", "content": self.system_prompt}]
-            if self.system_prompt
+            [{"role": "system", "content": system_prompt}]
+            if system_prompt
             else []
         )
 
