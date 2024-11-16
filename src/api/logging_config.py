@@ -1,4 +1,3 @@
-import os
 import logging
 import re
 from logging.handlers import RotatingFileHandler
@@ -153,3 +152,6 @@ def get_conversation_logs_path() -> Path:
 def get_app_logs_path() -> Path:
     """Get the path to application logs directory."""
     return APP_LOG_DIR
+
+def setup_noop_logger() -> logging.Logger:
+    return logging.Logger("noop")
