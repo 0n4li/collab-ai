@@ -25,8 +25,8 @@ class DebateAPIModel:
         self.perspective_and_discussion_prompt = perspective_and_discussion_prompt
         self.final_response_prompt = final_response_prompt
         
-        self.model1 = APIModel(model=model1_name, system_prompt=self.debate_prompt)
-        self.model2 = APIModel(model=model2_name, system_prompt=self.debate_prompt)
+        self.model1 = APIModel(model=model1_name)
+        self.model2 = APIModel(model=model2_name)
         self.model1_name = model1_name
         self.model2_name = model2_name
         self.max_discussion_rounds = 5  # Maximum number of discussion rounds
@@ -86,7 +86,7 @@ class DebateAPIModel:
         conv_logger.info(f"---\n")
         print("User Question:\n", user_question, "\n")
 
-        self.start()
+        self.start(user_instructions=self.debate_prompt)
 
         # Initial perspectives
         print(f"Getting initial Response from {self.model1_name}")
@@ -149,7 +149,7 @@ class DebateAPIModel:
         conv_logger.info(f'\n---\n\n')
         print(f"Agreement status: {agreement_status} - Model 1 ({status1}) / Model 2 ({status2})")
 
-        self.restart()
+        self.start(user_instructions=self.user_instructions)
         
         conv_logger.info(f"*Full transcript*:\n\n{transcript}\n")
         conv_logger.info(f'\n---\n\n')
@@ -172,19 +172,16 @@ class DebateAPIModel:
 
         return model1_final_response, model2_final_response, model1_initial_response, model2_initial_response
 
-    def start(self):
+    def start(self, user_instructions: str = None):
+        self.close()
         """Start conversations for both models."""
-        self.model1.start_conversation()
-        self.model2.start_conversation()
+        self.model1.start_conversation(user_instructions=user_instructions)
+        self.model2.start_conversation(user_instructions=user_instructions)
 
     def close(self):
         """Close conversations for both models."""
         self.model1.close_conversation()
         self.model2.close_conversation()
-        
-    def restart(self):
-        self.close()
-        self.start()
 
 
 def main():

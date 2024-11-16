@@ -73,16 +73,17 @@ perspective_and_discussion_prompt = _perspective_prompt + _discussion_prompt + _
 
 final_response_prompt = """
 
-We had a fruitful discussion on the below question/query/topic suggested by the user:
+There was a discussion between two AI Models on the below question/query/topic suggested by the user:
 
 ```{}```
 
-Below is the entire transcript of the dicussion:
+Below is the entire transcript of the dicussion between the two models:
 
 ```{}```
 
 Without showing any bias towards any model, based on the perspectives gained from the transcript above, create a valid response which should satisfy the requirements of the user.
 Avoid mentioning the transcripts or the models in your response. It should appear as a direct final answer/response from you.
+If there is a disagreement between the models at the end of the transcript, give a special mention of points of disagreement as alternate viewpoints considered but not concluded.
 
 For the final response, the user have given some additional instructions, which you may adhere to without compromising any of the above instructions or transcript:
 
