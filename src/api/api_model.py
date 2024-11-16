@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 import logging
 
 from api.api_request_handler import APIRequestHandler
-from api.system_prompt import prompt_generator
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s: %(message)s"
@@ -19,9 +18,11 @@ class APIModel:
 
         self.model = model
 
-        self.api_base_url = os.environ.get(
-            "ROUTER_BASE_URL", "https://openrouter.ai/api/v1"
-        )
+        self.api_base_url = os.environ.get("ROUTER_BASE_URL")
+        # Ensure required environment variables are set
+        if not self.api_base_url:
+            raise ValueError("ROUTER_BASE_URL environment variable not set")
+        
         self.api_request_handler = APIRequestHandler(self.api_base_url)
 
         self.api_key = os.environ.get("ROUTER_API_KEY")
@@ -83,30 +84,6 @@ class APIModel:
             logger.error(f"Unexpected error: {str(e)}")
             return "An unexpected error occurred. Please try again later."
 
-    def request_format_correction(self, original_response: str, response_type: str = "initial_response") -> str:
-        """
-        Request the model to reformat its response according to the expected JSON structure.
-        
-        Args:
-            original_response: The original non-compliant response
-            response_type: The type of response expected ("initial_response" or "review_response")
-            
-        Returns:
-            A new response that should comply with the JSON format
-        """
-        format_request = f"""Your previous response did not follow the required JSON format. Please reformat your response following this exact structure, enclosed in ```json and ``` tags:
-
-For {response_type}:
-{prompt_generator.get_format_example(response_type)}
-
-Your previous response was:
-{original_response}
-
-Please reformat your previous response to exactly match the required JSON structure. Maintain the same content and meaning, but ensure it follows the format precisely."""
-
-        logger.info("Requesting format correction")
-        return self.send_message(format_request)
-
     def start_conversation(self):
         logger.info("Starting a new conversation.")
         self.messages = (
@@ -122,8 +99,7 @@ Please reformat your previous response to exactly match the required JSON struct
 
 def main():
     user_instruction = "Provide detailed and technical responses."
-    system_prompt = prompt_generator.generate_prompt(user_instruction=user_instruction)
-    model = APIModel(model="openai/gpt-4-turbo-preview", system_prompt=system_prompt)
+    model = APIModel(model="openai/gpt-4-turbo-preview", system_prompt=user_instruction)
     model.start_conversation()
     print("Assistant Response:", model.send_message("Hello, how can you help me?"))
     model.close_conversation()
