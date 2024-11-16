@@ -16,8 +16,8 @@ class DebateAPIModel:
         Args:
             model1_name: Name of the first model
             model2_name: Name of the second model
-            user_instructions: Base instructions for the models
         """
+        self.user_instructions = ""
         self.initial_response_prompt = initial_response_prompt
         self.perspective_prompt = perspective_prompt
         self.discussion_prompt = discussion_prompt
@@ -75,7 +75,7 @@ class DebateAPIModel:
             return "agree"
         return "unknown"
     
-    def _generate_debate_prompt(user_instructions: str = None) -> str:
+    def _generate_debate_prompt(_, user_instructions: str = None) -> str:
         return system_prompt.format(user_instructions)
     
     def _clog(self, message: str):
@@ -203,8 +203,8 @@ class DebateAPIModel:
     def start(self, user_instructions: str = None):
         self.close()
         """Start conversations for both models."""
-        self.model1.start_conversation(user_instructions=user_instructions)
-        self.model2.start_conversation(user_instructions=user_instructions)
+        self.model1.start_conversation(system_prompt=user_instructions)
+        self.model2.start_conversation(system_prompt=user_instructions)
 
     def close(self):
         """Close conversations for both models."""

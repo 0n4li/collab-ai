@@ -1,7 +1,6 @@
 import os
 import requests
 from dotenv import load_dotenv
-import logging
 
 from api.api_request_handler import APIRequestHandler
 from api.logging_config import setup_app_logger
@@ -15,6 +14,7 @@ class APIModel:
         load_dotenv()
 
         self.model = model
+        self.messages = []
 
         self.api_base_url = os.environ.get("ROUTER_BASE_URL")
         # Ensure required environment variables are set
@@ -33,7 +33,7 @@ class APIModel:
     def send_message(self, user_message: str) -> str:
         
         logger.info(f"Sending message to API:\n\n{user_message}\n\n")
-        
+          
         # Build the conversation payload
         self.messages.append({"role": "user", "content": user_message})
         data = {"model": self.model, "messages": self.messages, "stream": False}
@@ -97,8 +97,8 @@ class APIModel:
 
 def main():
     user_instruction = "Provide detailed and technical responses."
-    model = APIModel(model="openai/gpt-4-turbo-preview", system_prompt=user_instruction)
-    model.start_conversation()
+    model = APIModel(model="openai/gpt-4-turbo-preview")
+    model.start_conversation(system_prompt=user_instruction)
     print("Assistant Response:", model.send_message("Hello, how can you help me?"))
     model.close_conversation()
 

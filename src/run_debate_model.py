@@ -10,8 +10,7 @@ def main():
     
     debate_model = DebateAPIModel(
         model1_name="openai/gpt-4o-mini",
-        model2_name="google/gemini-flash-1.5",
-        user_instructions=user_instructions
+        model2_name="google/gemini-flash-1.5"
     )
     
     test_question = f"{test_question} {answer_options}"
@@ -21,7 +20,7 @@ def main():
     print("\nThinking...\n")
     
     # Get response and ensure we only print the first occurrence
-    full_response = debate_model.get_response(test_question)
+    full_response = debate_model.get_response(test_question, user_instructions=user_instructions)
     
     # Split on any duplicate content by finding where the content starts repeating
     response_parts = full_response.split('\n\n')
