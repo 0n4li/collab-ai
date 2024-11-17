@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from api.prompts import system_prompt, initial_response_prompt, perspective_prompt, discussion_prompt, perspective_and_discussion_prompt, final_response_prompt
+from api.prompts import system_prompt, initial_response_prompt, perspective_prompt, discussion_prompt, perspective_and_discussion_prompt, final_response_prompt_agreement, final_response_prompt_disagreement
 from api.api_model import APIModel
 from api.logging_config import setup_app_logger, setup_conversation_logger, setup_noop_logger
 
@@ -18,12 +18,6 @@ class DebateAPIModel:
             model2_name: Name of the second model
         """
         self.user_instructions = ""
-        self.initial_response_prompt = initial_response_prompt
-        self.perspective_prompt = perspective_prompt
-        self.discussion_prompt = discussion_prompt
-        self.perspective_and_discussion_prompt = perspective_and_discussion_prompt
-        self.final_response_prompt = final_response_prompt
-        
         self.model1 = APIModel(model=model1_name)
         self.model2 = APIModel(model=model2_name)
         self.model1_name = model1_name
@@ -48,19 +42,22 @@ class DebateAPIModel:
                 self.conv_logger = None
 
     def _format_initial_response_prompt(self, user_question: str) -> str:
-        return self.initial_response_prompt.format(user_question)
+        return initial_response_prompt.format(user_question)
     
     def _format_perspective_prompt(self, perspective: str) -> str:
-        return self.perspective_prompt.format(perspective)
+        return perspective_prompt.format(perspective)
     
     def _format_discussion_prompt(self, discussion_point: str) -> str:
-        return self.discussion_prompt.format(discussion_point)
+        return discussion_prompt.format(discussion_point)
     
     def _format_perspective_and_discussion_prompt(self, perspective: str, discussion_point: str) -> str:
-        return self.perspective_and_discussion_prompt.format(perspective, discussion_point)
+        return perspective_and_discussion_prompt.format(perspective, discussion_point)
     
-    def _format_final_response_prompt(self, user_question: str, transcript: str) -> str:
-        return self.final_response_prompt.format(user_question, transcript, self.user_instructions)
+    def _format_final_response_prompt(self, user_question: str, transcript: str, agreement_status: str) -> str:
+        if agreement_status == "agree":
+            return final_response_prompt_agreement.format(user_question, transcript, self.user_instructions)
+        else:
+            return final_response_prompt_disagreement.format(user_question, transcript, self.user_instructions)
     
     def _check_agreement_status(self, response: str) -> str:
         """
@@ -173,6 +170,7 @@ class DebateAPIModel:
         self._clog(f"## Agreement Status:")
         self._clog(f"Agreement status: {agreement_status} - Model 1 ({status1}) / Model 2 ({status2})")
         self._clog(separater)
+        transcript+=f"Agreement status: {agreement_status} - Model 1 ({status1}) / Model 2 ({status2})"
         print(f"Agreement status: {agreement_status} - Model 1 ({status1}) / Model 2 ({status2})")
 
         self.start(user_instructions=user_instructions)
@@ -182,7 +180,7 @@ class DebateAPIModel:
         # self._clog(separater)
         # print(f"Full transcript:\n\n{transcript}\n")
         
-        final_response_prompt = self._format_final_response_prompt(user_question, transcript)
+        final_response_prompt = self._format_final_response_prompt(user_question, transcript, agreement_status)
         
         model1_final_response = self.model1.send_message(final_response_prompt)
         self._clog(f"## {self.model1_name} Collaborative Answer:")
