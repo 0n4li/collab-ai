@@ -83,7 +83,8 @@ Below is the entire transcript of the dicussion between the two models:
 
 Without showing any bias towards any model, based on the perspectives gained from the transcript above, create a valid response which should satisfy the requirements of the user.
 Avoid mentioning the transcripts or the models in your response. It should appear as a direct final answer/response from you.
-If there is a disagreement between the models at the end of the transcript, give a special mention of points of disagreement as alternate viewpoints considered but not concluded.
+If there is an agreement between the models at the end of the transcript, your response should be based on the agreed points and answer.
+However, if there still a disagreement between the models at the end of the transcript, choose the best response accordingly to your analysis of the transcript and give a special mention of the points of disagreement as alternate viewpoints considered but not concluded.
 
 For the final response, the user have given some additional instructions, which you may adhere to without compromising any of the above instructions or transcript:
 
