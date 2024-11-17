@@ -191,7 +191,7 @@ class DebateAPIModel:
         self._clog(f"### {self.model2_name} Final Response:")
         self._clog(model2_final_response)
         self._clog(separater)
-        print(f"{self.model2_name} gave an final response")
+        print(f"{self.model2_name} gave the final response")
         
         transcript_2 = transcript + f"## {final_response_tag}:\n\n{model2_final_response}\n\n"
         
