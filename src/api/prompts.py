@@ -70,8 +70,7 @@ discussion_prompt = _discussion_prompt + _response_agree_disagree_prompt
 
 perspective_and_discussion_prompt = _perspective_prompt + _discussion_prompt + _response_agree_disagree_prompt
 
-
-final_response_prompt = """
+_final_response_prompt_base = """
 
 There was a discussion between two AI Models on the below question/query/topic suggested by the user:
 
@@ -83,11 +82,32 @@ Below is the entire transcript of the dicussion between the two models:
 
 Without showing any bias towards any model, based on the perspectives gained from the transcript above, create a valid response which should satisfy the requirements of the user.
 Avoid mentioning the transcripts or the models in your response. It should appear as a direct final answer/response from you.
-If there is an agreement between the models at the end of the transcript, your response should be based on the agreed points and answer.
-However, if there still a disagreement between the models at the end of the transcript, choose the best response accordingly to your analysis of the transcript and give a special mention of the points of disagreement as alternate viewpoints considered but not concluded.
+
+"""
+
+_final_response_agreement_instruction = """
+
+There is an agreement between the models at the end of the transcript.
+Your response should be based on the agreed points and answer in the transcript.
+
+"""
+
+_final_response_disagreement_instruction = """
+
+It appear that there is still a disagreement between the models at the end of the transcript.
+Choose the best response according to the pros and cons of the arguments presented by the two models in the transcript.
+Give a special mention of the points of disagreement as alternate viewpoints to be considered but not concluded.
+
+"""
+
+_final_response_user_instructions = """
 
 For the final response, the user have given some additional instructions, which you may adhere to without compromising any of the above instructions or transcript:
 
 ```{}```
 
 """
+
+final_response_prompt_agreement = _final_response_prompt_base + _final_response_agreement_instruction + _final_response_user_instructions
+
+final_response_prompt_disagreement = _final_response_prompt_base + _final_response_disagreement_instruction + _final_response_user_instructions
