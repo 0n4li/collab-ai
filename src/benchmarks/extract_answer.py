@@ -19,7 +19,8 @@ def extract_answer(text):
     # Ordered by most common patterns first
     answer_patterns = [
         # Markdown and structured formats
-        r"\*\*.*?[Aa]nswer\s+is:\s*\(?([A-J])\)\*\*",
+        r"[Aa]nswer\s+is:?\s*\(?([A-J])\)",
+        r"[Aa]nswer\s+is:?\s*\\\(\s*\\text\{\(([A-J])\)[^\)]*\}",
         r"\*\*(?:Correct\s+)?[Aa]nswer(?:\s+is)?:?\*\*\s*\(?([A-J])\)?",
         r"###\s*(?:Correct\s+)?[Aa]nswer:?\s*\(?([A-J])\)?",
         
