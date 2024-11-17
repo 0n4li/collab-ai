@@ -119,10 +119,23 @@ def load_results(filepath):
     return {item['question_id']: item for item in data}
 
 
-def save_results(filepath, results):
-    # Convert the dictionary to a list of dictionaries
-    output_data = list(results.values()) 
+def save_results(filepath, results, sort_key=None):
+    """
+    Save results to a JSON file with optional sorting.
 
+    Args:
+        filepath (str): Path to the file to save the results.
+        results (dict): Dictionary of results to save.
+        sort_key (str): Key to sort the list of dictionaries (optional).
+    """
+    # Convert the dictionary to a list of dictionaries
+    output_data = list(results.values())
+    
+    # Sort the list of dictionaries if a sort_key is provided
+    if sort_key:
+        output_data = sorted(output_data, key=lambda x: x.get(sort_key))
+
+    # Save the sorted data to a file
     with open(filepath, 'w') as f:
         json.dump(output_data, f, indent=2)
 
@@ -196,7 +209,7 @@ def evaluate(subjects):
                 each["model_outputs"] = response
                 each["init_outputs"] = init_response
                 results[each["question_id"]] = each
-                save_results(output_res_path, results)
+                save_results(output_res_path, results, "question_id")
         
         output_summary_path = os.path.join(parsed_args.output_dir, "results_summary.json")
         generate_summary(subject, output_summary_path, results)
