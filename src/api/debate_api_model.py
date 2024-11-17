@@ -178,7 +178,7 @@ class DebateAPIModel:
         
         # Final perspectives
         print(f"Getting final Response from {self.model1_name}")
-        model1_final_response = self.model1.send_message(self._format_final_answer_prompt(user_question))
+        model1_final_response = self.model1.send_message(self._format_final_answer_prompt())
         self._clog(f"### {self.model1_name} Final Response:")
         self._clog(model1_final_response)
         self._clog(separater)
@@ -187,7 +187,7 @@ class DebateAPIModel:
         transcript_1 = transcript + f"## {final_response_tag}:\n\n{model1_final_response}\n\n"
 
         print(f"Getting final Response from {self.model2_name}")
-        model2_final_response = self.model2.send_message(self._format_final_answer_prompt(user_question))
+        model2_final_response = self.model2.send_message(self._format_final_answer_prompt())
         self._clog(f"### {self.model2_name} Final Response:")
         self._clog(model2_final_response)
         self._clog(separater)
