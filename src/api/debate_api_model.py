@@ -177,9 +177,9 @@ class DebateAPIModel:
 
         self.start(user_instructions=user_instructions)
         
-        self._clog(f"## Full transcript:")
-        self._clog(transcript)
-        self._clog(separater)
+        # self._clog(f"## Full transcript:")
+        # self._clog(transcript)
+        # self._clog(separater)
         # print(f"Full transcript:\n\n{transcript}\n")
         
         final_response_prompt = self._format_final_response_prompt(user_question, transcript)
