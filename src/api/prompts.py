@@ -36,7 +36,7 @@ Below is the question/query/topic/instruction:
 
 _response_agree_disagree_prompt = """
 
-I request you to respond in kind with your own perspective/input/feedback/defense.
+I request you to respond in kind with your own perspective/input/feedback/defense/clarifications/query.
 Remember we both want a constructive discussion on the question/query/topic suggested by the user in order to be helpful.
 IMPORTANT:
 At the end of your response, please state clearly whether you:
@@ -55,11 +55,11 @@ Below is my (AI Model) perspective/input on the question/query/topic suggested b
 
 _discussion_prompt = """
 
-Below is my (AI Model) perspective/input/feedback/critique of your previous response(s):
+Below is my (AI Model) perspective/input/feedback/critique/question/query of your previous response(s):
 
 ```{}```
 
-You are requested to recheck/reconfirm your own response and either stand firm on your own response or adopt from my perspective/input/feedback/critique.
+You are requested to recheck/reconfirm your own response and either stand firm on your own response or adopt from my perspective/input/feedback/critique or provide me with clarifications or respond to my queries.
 
 """
 
