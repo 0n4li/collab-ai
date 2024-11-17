@@ -50,7 +50,7 @@ def format_example(question, options, question_number, cot_content=""):
     choice_map = "ABCDEFGHIJ"
     for i, opt in enumerate(options):
         example += "{}. {}\n".format(choice_map[i], opt)
-    example += "\nAnswer: " + cot_content + "\n\n"
+    example += "\nAnswer {}: ".format(question_number) + cot_content + "\n\n"
     return example
 
 
@@ -95,7 +95,7 @@ def single_request(client, single_question, cot_examples_dict, exist_results, lo
     prompt = build_prompt(category, cot_examples)
     question = single_question["question"]
     options = single_question["options"]
-    input_text = format_example(question, options, "from user")
+    input_text = format_example(question, options, len(cot_examples) + 1)
     try:
         log_filename = f"Question#{q_id}.md"
         print(f"Question#{q_id} being attempted")
@@ -188,7 +188,7 @@ def evaluate(subjects):
 
         for each in tqdm(test_data):
             category = subject
-            log_dir = Path(os.path.join(parsed_args.output_dir, "answers", category))
+            log_dir = Path(os.path.join(parsed_args.output_dir, "answers", category.replace(" ", "_")))
             pred, response, init_pred, init_response, _ = single_request(client, each, dev_df, results, log_dir=log_dir)
             if response is not None:
                 each["pred"] = pred
@@ -215,6 +215,7 @@ def evaluate_question(question_number, subjects):
             if each["question_id"] == question_number:
                 category = subject
                 log_dir = Path(os.path.join(parsed_args.output_dir, "answers", category.replace(" ", "_")))
+                print(log_dir)
                 pred, response, init_pred, init_response, _ = single_request(client, each, dev_df, results, log_dir=log_dir, retake=True)
                 if response is not None:
                     each["pred"] = pred
