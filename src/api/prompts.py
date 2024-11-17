@@ -100,7 +100,7 @@ _final_response_agreement_instruction = """
 
 There is an agreement between the models at the end of the transcript.
 Your response should be based on the agreed points and answer in the transcript.
-Most emphasis to be on {}
+Special emphasis to be on {}
 
 """.format(final_response_tag)
 
@@ -110,7 +110,7 @@ _final_response_disagreement_instruction = """
 It appear that there is still a disagreement between the models at the end of the transcript.
 Choose the best response according to the pros and cons of the arguments presented by the two models in the transcript.
 Give a special mention of the points of disagreement as alternate viewpoints to be considered but not concluded.
-Most emphasis to be on {}
+Special emphasis to be on {}
 
 """.format(final_response_tag)
 
