@@ -218,12 +218,11 @@ def setup_conversation_logger(
         
         log_file = log_dir / log_filename
         
-        # Write markdown header if file doesn't exist
-        if not log_file.exists():
-            with open(log_file, 'w') as f:
-                f.write(f"_Conversation Log: {model1_name} and {model2_name}_\\\n")
-                f.write(f"_Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}_\n")
-                f.write("\n---\n\n")
+        # Clear the log_file and re-write
+        with open(log_file, 'w') as f:
+            f.write(f"_Conversation Log: {model1_name} and {model2_name}_\\\n")
+            f.write(f"_Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}_\n")
+            f.write("\n---\n\n")
         
         # Create formatter and handler
         formatter = MarkdownFormatter()
