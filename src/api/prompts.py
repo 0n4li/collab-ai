@@ -70,6 +70,17 @@ discussion_prompt = _discussion_prompt + _response_agree_disagree_prompt
 
 perspective_and_discussion_prompt = _perspective_prompt + _discussion_prompt + _response_agree_disagree_prompt
 
+final_answer_prompt = """
+
+Based on the discussion, please present your final answer to the question/query/topic suggested by the user.
+
+Follow the below instructions from the user:
+```{}```
+
+"""
+
+final_response_tag = "FINAL_CONCLUSIVE_RESPONSE"
+
 _final_response_prompt_base = """
 
 There was a discussion between two AI Models on the below question/query/topic suggested by the user:
@@ -89,16 +100,20 @@ _final_response_agreement_instruction = """
 
 There is an agreement between the models at the end of the transcript.
 Your response should be based on the agreed points and answer in the transcript.
+Most emphasis to be on {}
 
-"""
+""".format(final_response_tag)
+
 
 _final_response_disagreement_instruction = """
 
 It appear that there is still a disagreement between the models at the end of the transcript.
 Choose the best response according to the pros and cons of the arguments presented by the two models in the transcript.
 Give a special mention of the points of disagreement as alternate viewpoints to be considered but not concluded.
+Most emphasis to be on {}
 
-"""
+""".format(final_response_tag)
+
 
 _final_response_user_instructions = """
 

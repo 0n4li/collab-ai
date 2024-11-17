@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from api.prompts import system_prompt, initial_response_prompt, perspective_prompt, discussion_prompt, perspective_and_discussion_prompt, final_response_prompt_agreement, final_response_prompt_disagreement
+from api.prompts import system_prompt, initial_response_prompt, perspective_prompt, discussion_prompt, perspective_and_discussion_prompt, final_response_prompt_agreement, final_response_prompt_disagreement, final_answer_prompt, final_response_tag
 from api.api_model import APIModel
 from api.logging_config import setup_app_logger, setup_conversation_logger, setup_noop_logger
 
@@ -52,6 +52,9 @@ class DebateAPIModel:
     
     def _format_perspective_and_discussion_prompt(self, perspective: str, discussion_point: str) -> str:
         return perspective_and_discussion_prompt.format(perspective, discussion_point)
+    
+    def _format_final_answer_prompt(self) -> str:
+        return final_answer_prompt.format(self.user_instructions)
     
     def _format_final_response_prompt(self, user_question: str, transcript: str, agreement_status: str) -> str:
         if agreement_status == "agree":
@@ -172,7 +175,26 @@ class DebateAPIModel:
         self._clog(separater)
         transcript+=f"Agreement status: {agreement_status} - Model 1 ({status1}) / Model 2 ({status2})"
         print(f"Agreement status: {agreement_status} - Model 1 ({status1}) / Model 2 ({status2})")
+        
+        # Final perspectives
+        print(f"Getting final Response from {self.model1_name}")
+        model1_final_response = self.model1.send_message(self._format_final_answer_prompt(user_question))
+        self._clog(f"### {self.model1_name} Final Response:")
+        self._clog(model1_final_response)
+        self._clog(separater)
+        print(f"{self.model1_name} gave the final response")
+        
+        transcript_1 = transcript + f"## {final_response_tag}:\n\n{model1_final_response}\n\n"
 
+        print(f"Getting final Response from {self.model2_name}")
+        model2_final_response = self.model2.send_message(self._format_final_answer_prompt(user_question))
+        self._clog(f"### {self.model2_name} Final Response:")
+        self._clog(model2_final_response)
+        self._clog(separater)
+        print(f"{self.model2_name} gave an final response")
+        
+        transcript_2 = transcript + f"## {final_response_tag}:\n\n{model2_final_response}\n\n"
+        
         self.start(user_instructions=user_instructions)
         
         # self._clog(f"## Full transcript:")
@@ -180,23 +202,25 @@ class DebateAPIModel:
         # self._clog(separater)
         # print(f"Full transcript:\n\n{transcript}\n")
         
-        final_response_prompt = self._format_final_response_prompt(user_question, transcript, agreement_status)
-        
-        model1_final_response = self.model1.send_message(final_response_prompt)
+        model1_collaborative_response = self.model1.send_message(
+            self._format_final_response_prompt(user_question, transcript_1, agreement_status)                                                 
+        )
         self._clog(f"## {self.model1_name} Collaborative Answer:")
-        self._clog(model1_final_response)
+        self._clog(model1_collaborative_response)
         self._clog(separater)
         print(f"{self.model1_name} collaborative answer received")
 
-        model2_final_response = self.model2.send_message(final_response_prompt)
+        model2_collaborative_response = self.model2.send_message(
+            self._format_final_response_prompt(user_question, transcript_2, agreement_status)
+        )
         self._clog(f"## {self.model2_name} Collaborative Answer:")
-        self._clog(model2_final_response)
+        self._clog(model2_collaborative_response)
         self._clog(separater)
         print(f"{self.model2_name} collaborative answer received")
 
         self._close_conversation_logger()
 
-        return model1_final_response, model2_final_response, model1_initial_response, model2_initial_response
+        return model1_collaborative_response, model2_collaborative_response, model1_initial_response, model2_initial_response
 
     def start(self, user_instructions: str = None):
         self.close()
