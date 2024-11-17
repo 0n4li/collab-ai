@@ -49,10 +49,7 @@ def format_example(question, options, question_number, cot_content=""):
     choice_map = "ABCDEFGHIJ"
     for i, opt in enumerate(options):
         example += "{}. {}\n".format(choice_map[i], opt)
-    if cot_content == "":
-        example += "\nAnswer: "
-    else:
-        example += "\nAnswer: " + cot_content + "\n\n"
+    example += "\nAnswer: " + cot_content + "\n\n"
     return example
 
 
@@ -79,12 +76,12 @@ def get_answers(final_response1, final_response2, initial_response1, initial_res
     return pred1, pred2, initial_pred1, initial_pred2
 
 
-def single_request(client, single_question, cot_examples_dict, exist_results, log_dir:Path=None):
+def single_request(client, single_question, cot_examples_dict, exist_results, log_dir:Path=None, retake:bool=False):
     exist = True
     q_id = single_question["question_id"]
     result = exist_results.get(q_id)
     if result is not None:
-        if single_question["question"] == result["question"]:
+        if single_question["question"] == result["question"] and not retake:
             final_response1 = result["model_outputs"][0]
             final_response2 = result["model_outputs"][1]
             initial_response1 = result["init_outputs"][0]
@@ -182,8 +179,8 @@ def evaluate(subjects):
         subjects = list(test_df.keys())
     for subject in subjects:
         test_data = test_df[subject]
-        if len(test_data) > parsed_args.samples_per_subject:
-            test_data = random.sample(test_data, parsed_args.samples_per_subject)
+        if len(test_data) > parsed_args.batch_size:
+            test_data = random.sample(test_data, parsed_args.batch_size)
         output_res_path = os.path.join(parsed_args.output_dir, subject.replace(" ", "_") + "_result.json")
         results = load_results(output_res_path)
 
@@ -201,6 +198,34 @@ def evaluate(subjects):
         
         output_summary_path = os.path.join(parsed_args.output_dir, "results_summary.json")
         generate_summary(subject, output_summary_path, results)
+        
+        
+def evaluate_question(question_number, subjects):
+    client = get_client()
+    test_df, dev_df = load_mmlu_pro()
+    if not subjects:
+        subjects = list(test_df.keys())
+    for subject in subjects:
+        test_data = test_df[subject]
+        output_res_path = os.path.join(parsed_args.output_dir, subject.replace(" ", "_") + "_result.json")
+        results = load_results(output_res_path)
+        for each in tqdm(test_data):
+            if each["question_id"] == question_number:
+                category = subject
+                log_dir = Path(os.path.join(parsed_args.output_dir, "answers", category))
+                pred, response, init_pred, init_response, _ = single_request(client, each, dev_df, results, log_dir=log_dir, retake=True)
+                if response is not None:
+                    each["pred"] = pred
+                    each["init_pred"] = init_pred
+                    each["model_outputs"] = response
+                    each["init_outputs"] = init_response
+                    results[each["question_id"]] = each
+                    save_results(output_res_path, results)
+        
+                output_summary_path = os.path.join(parsed_args.output_dir, "results_summary.json")
+                generate_summary(subject, output_summary_path, results)
+                return
+    print(f"Question#{question_number} not found")
 
 
 def generate_summary(subject, output_summary_path, results):
@@ -384,19 +409,25 @@ def main(args=None):
     parser.add_argument("--output_dir", "-o", type=str, default="eval_results/")
     parser.add_argument("--model1_name", "-m1", type=str)
     parser.add_argument("--model2_name", "-m2", type=str)
-    parser.add_argument("--assigned_subjects", "-a", type=str, default="all")
-    parser.add_argument("--samples_per_subject", "-s", type=int, default=sys.maxsize)
+    parser.add_argument("--subjects", "-s", type=str, default="all")
+    parser.add_argument("--batch_size", "-b", type=int, default=sys.maxsize)
+    parser.add_argument("--question", "-q", type=int, default=-1)
+    
     assigned_subjects = []
     if args is None:
         args = sys.argv[1:]
     parsed_args = parser.parse_args(args=args)
 
-    if parsed_args.assigned_subjects == "all":
+    if parsed_args.subjects == "all":
         assigned_subjects = []
     else:
-        assigned_subjects = parsed_args.assigned_subjects.split(",")
+        assigned_subjects = parsed_args.subjects.split(",")
     os.makedirs(parsed_args.output_dir, exist_ok=True)
-    evaluate(assigned_subjects)
+    
+    if parsed_args.question != 1:
+        evaluate_question(parsed_args.question, assigned_subjects)
+    else:
+        evaluate(assigned_subjects)
     
 if __name__ == "__main__":
     args = sys.argv[1:]
