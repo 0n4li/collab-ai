@@ -8,7 +8,7 @@ logs/*
 !logs/conversations/.gitkeep
 
 # Test
-test*.py
+test*.*
 
 # Cache
 .DS_Store
