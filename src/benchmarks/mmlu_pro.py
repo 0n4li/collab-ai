@@ -280,7 +280,7 @@ def main(args=None):
         assigned_subjects = parsed_args.subjects.split(",")
     os.makedirs(parsed_args.output_dir, exist_ok=True)
     
-    if parsed_args.question != 1:
+    if parsed_args.question != -1:
         evaluate_question(parsed_args.question, assigned_subjects)
     else:
         evaluate(assigned_subjects)
