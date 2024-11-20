@@ -43,13 +43,11 @@ def update_summary(summary, subject, results):
             pred1, pred2 = result["pred"]
             answer = result.get("answer")
             
-            # Only count agreement when both predictions are valid
-            if pred1 is not None and pred2 is not None:
-                if pred1 == pred2:
-                    agreement["final"]["agree"] += 1
-                else:
-                    agreement["final"]["disagree"] += 1
-            
+            if pred1 == pred2:
+                agreement["final"]["agree"] += 1
+            else:
+                agreement["final"]["disagree"] += 1
+        
             # Update correctness counters
             if pred1 == answer and pred2 == answer:
                 stats["corr"] += 1
@@ -67,11 +65,10 @@ def update_summary(summary, subject, results):
             init_pred1, init_pred2 = result["init_pred"]
             answer = result.get("answer")
             
-            if init_pred1 is not None and init_pred2 is not None:
-                if init_pred1 == init_pred2:
-                    agreement["init"]["agree"] += 1
-                else:
-                    agreement["init"]["disagree"] += 1
+            if init_pred1 == init_pred2:
+                agreement["init"]["agree"] += 1
+            else:
+                agreement["init"]["disagree"] += 1
             
             update_model_stats(model1["init"], init_pred1, answer)
             update_model_stats(model2["init"], init_pred2, answer)
