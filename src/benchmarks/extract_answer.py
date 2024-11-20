@@ -24,7 +24,7 @@ def extract_answer(text):
     r_optional_colon = r"(?:\:+)?"
     r_optional_asterisk = r"(?:\**\s*)*"
     r_optional_parentheses_open = r"\(?"
-    r_answer_range_match = r"([A-J]|[a-j])"
+    r_answer_range_match = r"\b([A-J]|[a-j])\b"
     r_optional_parentheses_close = r"\)?"
     
     main_pattern = (
