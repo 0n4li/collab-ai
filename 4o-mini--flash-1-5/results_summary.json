@@ -1,0 +1,737 @@
+{
+  "overall": {
+    "corr": 206,
+    "na": 26,
+    "wrong": 104,
+    "total": 336,
+    "acc": 0.6130952380952381,
+    "model1": {
+      "final": {
+        "corr": 215,
+        "na": 17,
+        "wrong": 104,
+        "total": 336,
+        "acc": 0.6398809523809523
+      },
+      "init": {
+        "corr": 224,
+        "na": 5,
+        "wrong": 107,
+        "total": 336,
+        "acc": 0.6666666666666666
+      }
+    },
+    "model2": {
+      "final": {
+        "corr": 211,
+        "na": 20,
+        "wrong": 105,
+        "total": 336,
+        "acc": 0.6279761904761905
+      },
+      "init": {
+        "corr": 215,
+        "na": 12,
+        "wrong": 109,
+        "total": 336,
+        "acc": 0.6398809523809523
+      }
+    },
+    "agreement": {
+      "final": {
+        "agree": 308,
+        "disagree": 28
+      },
+      "init": {
+        "agree": 227,
+        "disagree": 109
+      }
+    }
+  },
+  "biology": {
+    "corr": 27,
+    "na": 0,
+    "wrong": 3,
+    "total": 30,
+    "acc": 0.9,
+    "agreement": {
+      "final": {
+        "agree": 29,
+        "disagree": 1
+      },
+      "init": {
+        "agree": 24,
+        "disagree": 6
+      }
+    },
+    "model1": {
+      "final": {
+        "corr": 28,
+        "na": 0,
+        "wrong": 2,
+        "total": 30,
+        "acc": 0.9333333333333333
+      },
+      "init": {
+        "corr": 25,
+        "na": 0,
+        "wrong": 5,
+        "total": 30,
+        "acc": 0.8333333333333334
+      }
+    },
+    "model2": {
+      "final": {
+        "corr": 27,
+        "na": 0,
+        "wrong": 3,
+        "total": 30,
+        "acc": 0.9
+      },
+      "init": {
+        "corr": 26,
+        "na": 0,
+        "wrong": 4,
+        "total": 30,
+        "acc": 0.8666666666666667
+      }
+    }
+  },
+  "business": {
+    "corr": 18,
+    "na": 6,
+    "wrong": 6,
+    "total": 30,
+    "acc": 0.6,
+    "agreement": {
+      "final": {
+        "agree": 28,
+        "disagree": 2
+      },
+      "init": {
+        "agree": 19,
+        "disagree": 11
+      }
+    },
+    "model1": {
+      "final": {
+        "corr": 19,
+        "na": 5,
+        "wrong": 6,
+        "total": 30,
+        "acc": 0.6333333333333333
+      },
+      "init": {
+        "corr": 20,
+        "na": 1,
+        "wrong": 9,
+        "total": 30,
+        "acc": 0.6666666666666666
+      }
+    },
+    "model2": {
+      "final": {
+        "corr": 19,
+        "na": 6,
+        "wrong": 5,
+        "total": 30,
+        "acc": 0.6333333333333333
+      },
+      "init": {
+        "corr": 24,
+        "na": 4,
+        "wrong": 2,
+        "total": 30,
+        "acc": 0.8
+      }
+    }
+  },
+  "chemistry": {
+    "corr": 21,
+    "na": 1,
+    "wrong": 7,
+    "total": 29,
+    "acc": 0.7241379310344828,
+    "agreement": {
+      "final": {
+        "agree": 27,
+        "disagree": 2
+      },
+      "init": {
+        "agree": 19,
+        "disagree": 10
+      }
+    },
+    "model1": {
+      "final": {
+        "corr": 23,
+        "na": 0,
+        "wrong": 6,
+        "total": 29,
+        "acc": 0.7931034482758621
+      },
+      "init": {
+        "corr": 19,
+        "na": 0,
+        "wrong": 10,
+        "total": 29,
+        "acc": 0.6551724137931034
+      }
+    },
+    "model2": {
+      "final": {
+        "corr": 21,
+        "na": 1,
+        "wrong": 7,
+        "total": 29,
+        "acc": 0.7241379310344828
+      },
+      "init": {
+        "corr": 21,
+        "na": 0,
+        "wrong": 8,
+        "total": 29,
+        "acc": 0.7241379310344828
+      }
+    }
+  },
+  "computer science": {
+    "corr": 12,
+    "na": 0,
+    "wrong": 3,
+    "total": 15,
+    "acc": 0.8,
+    "agreement": {
+      "final": {
+        "agree": 14,
+        "disagree": 1
+      },
+      "init": {
+        "agree": 11,
+        "disagree": 4
+      }
+    },
+    "model1": {
+      "final": {
+        "corr": 12,
+        "na": 0,
+        "wrong": 3,
+        "total": 15,
+        "acc": 0.8
+      },
+      "init": {
+        "corr": 13,
+        "na": 0,
+        "wrong": 2,
+        "total": 15,
+        "acc": 0.8666666666666667
+      }
+    },
+    "model2": {
+      "final": {
+        "corr": 12,
+        "na": 0,
+        "wrong": 3,
+        "total": 15,
+        "acc": 0.8
+      },
+      "init": {
+        "corr": 12,
+        "na": 0,
+        "wrong": 3,
+        "total": 15,
+        "acc": 0.8
+      }
+    }
+  },
+  "economics": {
+    "corr": 18,
+    "na": 3,
+    "wrong": 5,
+    "total": 26,
+    "acc": 0.6923076923076923,
+    "agreement": {
+      "final": {
+        "agree": 23,
+        "disagree": 3
+      },
+      "init": {
+        "agree": 21,
+        "disagree": 5
+      }
+    },
+    "model1": {
+      "final": {
+        "corr": 18,
+        "na": 3,
+        "wrong": 5,
+        "total": 26,
+        "acc": 0.6923076923076923
+      },
+      "init": {
+        "corr": 21,
+        "na": 3,
+        "wrong": 2,
+        "total": 26,
+        "acc": 0.8076923076923077
+      }
+    },
+    "model2": {
+      "final": {
+        "corr": 19,
+        "na": 2,
+        "wrong": 5,
+        "total": 26,
+        "acc": 0.7307692307692307
+      },
+      "init": {
+        "corr": 19,
+        "na": 1,
+        "wrong": 6,
+        "total": 26,
+        "acc": 0.7307692307692307
+      }
+    }
+  },
+  "engineering": {
+    "corr": 4,
+    "na": 4,
+    "wrong": 7,
+    "total": 15,
+    "acc": 0.26666666666666666,
+    "agreement": {
+      "final": {
+        "agree": 12,
+        "disagree": 3
+      },
+      "init": {
+        "agree": 5,
+        "disagree": 10
+      }
+    },
+    "model1": {
+      "final": {
+        "corr": 4,
+        "na": 3,
+        "wrong": 8,
+        "total": 15,
+        "acc": 0.26666666666666666
+      },
+      "init": {
+        "corr": 6,
+        "na": 0,
+        "wrong": 9,
+        "total": 15,
+        "acc": 0.4
+      }
+    },
+    "model2": {
+      "final": {
+        "corr": 5,
+        "na": 3,
+        "wrong": 7,
+        "total": 15,
+        "acc": 0.3333333333333333
+      },
+      "init": {
+        "corr": 6,
+        "na": 4,
+        "wrong": 5,
+        "total": 15,
+        "acc": 0.4
+      }
+    }
+  },
+  "health": {
+    "corr": 18,
+    "na": 2,
+    "wrong": 10,
+    "total": 30,
+    "acc": 0.6,
+    "agreement": {
+      "final": {
+        "agree": 28,
+        "disagree": 2
+      },
+      "init": {
+        "agree": 20,
+        "disagree": 10
+      }
+    },
+    "model1": {
+      "final": {
+        "corr": 19,
+        "na": 1,
+        "wrong": 10,
+        "total": 30,
+        "acc": 0.6333333333333333
+      },
+      "init": {
+        "corr": 16,
+        "na": 0,
+        "wrong": 14,
+        "total": 30,
+        "acc": 0.5333333333333333
+      }
+    },
+    "model2": {
+      "final": {
+        "corr": 18,
+        "na": 1,
+        "wrong": 11,
+        "total": 30,
+        "acc": 0.6
+      },
+      "init": {
+        "corr": 17,
+        "na": 0,
+        "wrong": 13,
+        "total": 30,
+        "acc": 0.5666666666666667
+      }
+    }
+  },
+  "history": {
+    "corr": 17,
+    "na": 4,
+    "wrong": 7,
+    "total": 28,
+    "acc": 0.6071428571428571,
+    "agreement": {
+      "final": {
+        "agree": 24,
+        "disagree": 4
+      },
+      "init": {
+        "agree": 21,
+        "disagree": 7
+      }
+    },
+    "model1": {
+      "final": {
+        "corr": 17,
+        "na": 2,
+        "wrong": 9,
+        "total": 28,
+        "acc": 0.6071428571428571
+      },
+      "init": {
+        "corr": 19,
+        "na": 0,
+        "wrong": 9,
+        "total": 28,
+        "acc": 0.6785714285714286
+      }
+    },
+    "model2": {
+      "final": {
+        "corr": 18,
+        "na": 2,
+        "wrong": 8,
+        "total": 28,
+        "acc": 0.6428571428571429
+      },
+      "init": {
+        "corr": 15,
+        "na": 0,
+        "wrong": 13,
+        "total": 28,
+        "acc": 0.5357142857142857
+      }
+    }
+  },
+  "law": {
+    "corr": 5,
+    "na": 0,
+    "wrong": 24,
+    "total": 29,
+    "acc": 0.1724137931034483,
+    "agreement": {
+      "final": {
+        "agree": 26,
+        "disagree": 3
+      },
+      "init": {
+        "agree": 11,
+        "disagree": 18
+      }
+    },
+    "model1": {
+      "final": {
+        "corr": 6,
+        "na": 0,
+        "wrong": 23,
+        "total": 29,
+        "acc": 0.20689655172413793
+      },
+      "init": {
+        "corr": 11,
+        "na": 0,
+        "wrong": 18,
+        "total": 29,
+        "acc": 0.3793103448275862
+      }
+    },
+    "model2": {
+      "final": {
+        "corr": 5,
+        "na": 0,
+        "wrong": 24,
+        "total": 29,
+        "acc": 0.1724137931034483
+      },
+      "init": {
+        "corr": 8,
+        "na": 0,
+        "wrong": 21,
+        "total": 29,
+        "acc": 0.27586206896551724
+      }
+    }
+  },
+  "math": {
+    "corr": 13,
+    "na": 1,
+    "wrong": 1,
+    "total": 15,
+    "acc": 0.8666666666666667,
+    "agreement": {
+      "final": {
+        "agree": 14,
+        "disagree": 1
+      },
+      "init": {
+        "agree": 14,
+        "disagree": 1
+      }
+    },
+    "model1": {
+      "final": {
+        "corr": 13,
+        "na": 1,
+        "wrong": 1,
+        "total": 15,
+        "acc": 0.8666666666666667
+      },
+      "init": {
+        "corr": 15,
+        "na": 0,
+        "wrong": 0,
+        "total": 15,
+        "acc": 1.0
+      }
+    },
+    "model2": {
+      "final": {
+        "corr": 14,
+        "na": 0,
+        "wrong": 1,
+        "total": 15,
+        "acc": 0.9333333333333333
+      },
+      "init": {
+        "corr": 14,
+        "na": 0,
+        "wrong": 1,
+        "total": 15,
+        "acc": 0.9333333333333333
+      }
+    }
+  },
+  "other": {
+    "corr": 19,
+    "na": 2,
+    "wrong": 9,
+    "total": 30,
+    "acc": 0.6333333333333333,
+    "agreement": {
+      "final": {
+        "agree": 28,
+        "disagree": 2
+      },
+      "init": {
+        "agree": 24,
+        "disagree": 6
+      }
+    },
+    "model1": {
+      "final": {
+        "corr": 21,
+        "na": 1,
+        "wrong": 8,
+        "total": 30,
+        "acc": 0.7
+      },
+      "init": {
+        "corr": 22,
+        "na": 0,
+        "wrong": 8,
+        "total": 30,
+        "acc": 0.7333333333333333
+      }
+    },
+    "model2": {
+      "final": {
+        "corr": 19,
+        "na": 2,
+        "wrong": 9,
+        "total": 30,
+        "acc": 0.6333333333333333
+      },
+      "init": {
+        "corr": 20,
+        "na": 2,
+        "wrong": 8,
+        "total": 30,
+        "acc": 0.6666666666666666
+      }
+    }
+  },
+  "philosophy": {
+    "corr": 7,
+    "na": 1,
+    "wrong": 7,
+    "total": 15,
+    "acc": 0.4666666666666667,
+    "agreement": {
+      "final": {
+        "agree": 13,
+        "disagree": 2
+      },
+      "init": {
+        "agree": 9,
+        "disagree": 6
+      }
+    },
+    "model1": {
+      "final": {
+        "corr": 7,
+        "na": 0,
+        "wrong": 8,
+        "total": 15,
+        "acc": 0.4666666666666667
+      },
+      "init": {
+        "corr": 8,
+        "na": 1,
+        "wrong": 6,
+        "total": 15,
+        "acc": 0.5333333333333333
+      }
+    },
+    "model2": {
+      "final": {
+        "corr": 7,
+        "na": 1,
+        "wrong": 7,
+        "total": 15,
+        "acc": 0.4666666666666667
+      },
+      "init": {
+        "corr": 5,
+        "na": 0,
+        "wrong": 10,
+        "total": 15,
+        "acc": 0.3333333333333333
+      }
+    }
+  },
+  "physics": {
+    "corr": 10,
+    "na": 2,
+    "wrong": 3,
+    "total": 15,
+    "acc": 0.6666666666666666,
+    "agreement": {
+      "final": {
+        "agree": 14,
+        "disagree": 1
+      },
+      "init": {
+        "agree": 8,
+        "disagree": 7
+      }
+    },
+    "model1": {
+      "final": {
+        "corr": 11,
+        "na": 1,
+        "wrong": 3,
+        "total": 15,
+        "acc": 0.7333333333333333
+      },
+      "init": {
+        "corr": 10,
+        "na": 0,
+        "wrong": 5,
+        "total": 15,
+        "acc": 0.6666666666666666
+      }
+    },
+    "model2": {
+      "final": {
+        "corr": 10,
+        "na": 2,
+        "wrong": 3,
+        "total": 15,
+        "acc": 0.6666666666666666
+      },
+      "init": {
+        "corr": 10,
+        "na": 1,
+        "wrong": 4,
+        "total": 15,
+        "acc": 0.6666666666666666
+      }
+    }
+  },
+  "psychology": {
+    "corr": 17,
+    "na": 0,
+    "wrong": 12,
+    "total": 29,
+    "acc": 0.5862068965517241,
+    "agreement": {
+      "final": {
+        "agree": 28,
+        "disagree": 1
+      },
+      "init": {
+        "agree": 21,
+        "disagree": 8
+      }
+    },
+    "model1": {
+      "final": {
+        "corr": 17,
+        "na": 0,
+        "wrong": 12,
+        "total": 29,
+        "acc": 0.5862068965517241
+      },
+      "init": {
+        "corr": 19,
+        "na": 0,
+        "wrong": 10,
+        "total": 29,
+        "acc": 0.6551724137931034
+      }
+    },
+    "model2": {
+      "final": {
+        "corr": 17,
+        "na": 0,
+        "wrong": 12,
+        "total": 29,
+        "acc": 0.5862068965517241
+      },
+      "init": {
+        "corr": 18,
+        "na": 0,
+        "wrong": 11,
+        "total": 29,
+        "acc": 0.6206896551724138
+      }
+    }
+  }
+}
