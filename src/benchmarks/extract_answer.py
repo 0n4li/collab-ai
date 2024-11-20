@@ -16,19 +16,41 @@ def extract_answer(text):
     # Split into sentences for better context analysis
     sentences = re.split(r'[.!?]\s+|\n+', cleaned_text)
     
+    r_optional_the = r"(?:[Tt]he\s+)?"
+    r_optional_final = r"(?:[Ff]inal\s+)?"
+    r_optional_correct = r"(?:[Cc]orrect\s+)?"
+    r_answer = r"(?:[Aa]nswer|[Cc]choice|[Ss]olution|[Rr]esponse)"
+    r_optional_is = r"(?:\s+(?:is|would be|will be))?\s*"
+    r_optional_colon = r"(?:\:+)?"
+    r_optional_asterisk = r"(?:\**\s*)*"
+    r_optional_parentheses_open = r"\(?"
+    r_answer_range_match = r"([A-J]|[a-j])"
+    r_optional_parentheses_close = r"\)?"
+    
+    main_pattern = (
+        rf'{r_optional_asterisk}'
+        rf'{r_optional_the}'
+        rf'{r_optional_final}'
+        rf'{r_optional_correct}'
+        rf'{r_answer}'
+        rf'{r_optional_colon}'
+        rf'{r_optional_is}'
+        rf'{r_optional_colon}'
+        rf'{r_optional_asterisk}'
+        rf'{r_optional_parentheses_open}'
+        rf'{r_optional_asterisk}'
+        rf'{r_answer_range_match}'
+        rf'{r_optional_asterisk}'
+        rf'{r_optional_parentheses_close}'
+        rf'{r_optional_asterisk}'
+    )
+    
+    #print(main_pattern)
+    
     # Ordered by most common patterns first
     answer_patterns = [
         # Markdown and structured formats
-        r"[Aa]nswer\s+is:?\s*\(?([A-J])\)",
-        r"[Aa]nswer\s+is:?\s*\\\(\s*\\text\{\(([A-J])\)[^\)]*\}",
-        r"\*\*(?:Correct\s+)?[Aa]nswer(?:\s+is)?:?\*\*\s*\(?([A-J])\)?",
-        r"###\s*(?:Correct\s+)?[Aa]nswer:?\s*\(?([A-J])\)?",
-        
-        # Explicit answer statements with context
-        r"[Aa]nswer:.*?\(([A-J])\)",  # Handle "Answer: See explanation above. (F)"
-        r"[Aa]nswer:.*?([A-J])\b",  # Alternative without parentheses
-        r"(?:[Tt]he\s+)?(?:final\s+)?(?:answer|choice|solution|response)\s+(?:is|would be|:)\s*\(?([A-J])\)?",
-        r"\b[Aa]nswer\s*(?::|is)?\s*\(?([A-J])\)?\b",
+        main_pattern,
         
         # Process of elimination and exception patterns
         r"[Aa]ll\s+options?\s+except\s*\(([A-J])\)\b",  # Handle "All options except (K) contain errors"
@@ -68,7 +90,6 @@ def extract_answer(text):
         r"\(?([A-J])\)?\s+(?:is|provides|represents)(?:\s+[^A-J]+|$)",
         
         # Fallback patterns for edge cases
-        r"[Aa]nswer:.*?\(([A-J])\)",  # Another try at "Answer: See explanation above. (F)"
         r"[Aa]ll.*?except.*?\(([A-J])\)",  # Another try at "All options except (K)"
     ]
     

@@ -77,18 +77,22 @@ def get_answers(final_response1, final_response2, initial_response1, initial_res
     return pred1, pred2, initial_pred1, initial_pred2
 
 
+def reevaluate_answers(question_result):
+    final_response1 = question_result["model_outputs"][0]
+    final_response2 = question_result["model_outputs"][1]
+    initial_response1 = question_result["init_outputs"][0]
+    initial_response2 = question_result["init_outputs"][1]
+    pred1, pred2, initial_pred1, initial_pred2 = get_answers(final_response1=final_response1, final_response2=final_response2, initial_response1=initial_response1, initial_response2=initial_response2)
+    return (pred1, pred2), (final_response1, final_response2), (initial_pred1, initial_pred2), (initial_response1, initial_response2), True
+
+
 def single_request(client, single_question, cot_examples_dict, exist_results, log_dir:Path=None, retake:bool=False):
     exist = True
     q_id = single_question["question_id"]
     result = exist_results.get(q_id)
     if result is not None:
         if single_question["question"] == result["question"] and not retake:
-            final_response1 = result["model_outputs"][0]
-            final_response2 = result["model_outputs"][1]
-            initial_response1 = result["init_outputs"][0]
-            initial_response2 = result["init_outputs"][1]
-            pred1, pred2, initial_pred1, initial_pred2 = get_answers(final_response1=final_response1, final_response2=final_response2, initial_response1=initial_response1, initial_response2=initial_response2)
-            return (pred1, pred2), (final_response1, final_response2), (initial_pred1, initial_pred2), (initial_response1, initial_response2), exist
+            return reevaluate_answers(result)
     exist = False
     category = single_question["category"]
     cot_examples = cot_examples_dict[category]
