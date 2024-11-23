@@ -152,7 +152,7 @@ class DebateAPIModel:
             print(f"{self.model2_name} agreement status - {status2} - after round {current_round + 1}")
 
             # Update agreement status based on both models' responses
-            if status1 == "agree" and status2 == "agree":
+            if status1 == "agree" and status2 == "agree" and (current_round + 1) > 1:
                 agreement_status = "agree"
                 break
             
