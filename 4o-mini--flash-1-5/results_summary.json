@@ -1,50 +1,50 @@
 {
   "overall": {
-    "corr": 206,
-    "na": 26,
-    "wrong": 104,
+    "corr": 219,
+    "na": 15,
+    "wrong": 102,
     "total": 336,
-    "acc": 0.6130952380952381,
+    "acc": 0.6517857142857143,
     "model1": {
       "final": {
-        "corr": 215,
-        "na": 17,
-        "wrong": 104,
+        "corr": 219,
+        "na": 15,
+        "wrong": 102,
         "total": 336,
-        "acc": 0.6398809523809523
+        "acc": 0.6517857142857143
       },
       "init": {
-        "corr": 224,
-        "na": 5,
-        "wrong": 107,
+        "corr": 220,
+        "na": 10,
+        "wrong": 106,
         "total": 336,
-        "acc": 0.6666666666666666
+        "acc": 0.6547619047619048
       }
     },
     "model2": {
       "final": {
-        "corr": 211,
-        "na": 20,
-        "wrong": 105,
+        "corr": 219,
+        "na": 15,
+        "wrong": 102,
         "total": 336,
-        "acc": 0.6279761904761905
+        "acc": 0.6517857142857143
       },
       "init": {
-        "corr": 215,
-        "na": 12,
-        "wrong": 109,
+        "corr": 217,
+        "na": 18,
+        "wrong": 101,
         "total": 336,
-        "acc": 0.6398809523809523
+        "acc": 0.6458333333333334
       }
     },
     "agreement": {
       "final": {
-        "agree": 308,
-        "disagree": 28
+        "agree": 335,
+        "disagree": 1
       },
       "init": {
-        "agree": 227,
-        "disagree": 109
+        "agree": 236,
+        "disagree": 100
       }
     }
   },
@@ -56,8 +56,8 @@
     "acc": 0.9,
     "agreement": {
       "final": {
-        "agree": 29,
-        "disagree": 1
+        "agree": 30,
+        "disagree": 0
       },
       "init": {
         "agree": 24,
@@ -66,11 +66,11 @@
     },
     "model1": {
       "final": {
-        "corr": 28,
+        "corr": 27,
         "na": 0,
-        "wrong": 2,
+        "wrong": 3,
         "total": 30,
-        "acc": 0.9333333333333333
+        "acc": 0.9
       },
       "init": {
         "corr": 25,
@@ -98,49 +98,49 @@
     }
   },
   "business": {
-    "corr": 18,
-    "na": 6,
+    "corr": 21,
+    "na": 3,
     "wrong": 6,
     "total": 30,
-    "acc": 0.6,
+    "acc": 0.7,
     "agreement": {
       "final": {
-        "agree": 28,
-        "disagree": 2
+        "agree": 30,
+        "disagree": 0
       },
       "init": {
-        "agree": 19,
-        "disagree": 11
+        "agree": 21,
+        "disagree": 9
       }
     },
     "model1": {
       "final": {
-        "corr": 19,
-        "na": 5,
+        "corr": 21,
+        "na": 3,
         "wrong": 6,
         "total": 30,
-        "acc": 0.6333333333333333
+        "acc": 0.7
       },
       "init": {
-        "corr": 20,
-        "na": 1,
-        "wrong": 9,
+        "corr": 21,
+        "na": 3,
+        "wrong": 6,
         "total": 30,
-        "acc": 0.6666666666666666
+        "acc": 0.7
       }
     },
     "model2": {
       "final": {
-        "corr": 19,
-        "na": 6,
-        "wrong": 5,
+        "corr": 21,
+        "na": 3,
+        "wrong": 6,
         "total": 30,
-        "acc": 0.6333333333333333
+        "acc": 0.7
       },
       "init": {
         "corr": 24,
-        "na": 4,
-        "wrong": 2,
+        "na": 3,
+        "wrong": 3,
         "total": 30,
         "acc": 0.8
       }
@@ -148,48 +148,48 @@
   },
   "chemistry": {
     "corr": 21,
-    "na": 1,
-    "wrong": 7,
+    "na": 2,
+    "wrong": 6,
     "total": 29,
     "acc": 0.7241379310344828,
     "agreement": {
       "final": {
-        "agree": 27,
-        "disagree": 2
+        "agree": 29,
+        "disagree": 0
       },
       "init": {
-        "agree": 19,
-        "disagree": 10
+        "agree": 20,
+        "disagree": 9
       }
     },
     "model1": {
       "final": {
-        "corr": 23,
-        "na": 0,
+        "corr": 21,
+        "na": 2,
         "wrong": 6,
         "total": 29,
-        "acc": 0.7931034482758621
+        "acc": 0.7241379310344828
       },
       "init": {
-        "corr": 19,
-        "na": 0,
-        "wrong": 10,
+        "corr": 18,
+        "na": 2,
+        "wrong": 9,
         "total": 29,
-        "acc": 0.6551724137931034
+        "acc": 0.6206896551724138
       }
     },
     "model2": {
       "final": {
         "corr": 21,
-        "na": 1,
-        "wrong": 7,
+        "na": 2,
+        "wrong": 6,
         "total": 29,
         "acc": 0.7241379310344828
       },
       "init": {
         "corr": 21,
-        "na": 0,
-        "wrong": 8,
+        "na": 2,
+        "wrong": 6,
         "total": 29,
         "acc": 0.7241379310344828
       }
@@ -197,63 +197,63 @@
   },
   "computer science": {
     "corr": 12,
-    "na": 0,
-    "wrong": 3,
+    "na": 1,
+    "wrong": 2,
     "total": 15,
     "acc": 0.8,
     "agreement": {
       "final": {
-        "agree": 14,
-        "disagree": 1
+        "agree": 15,
+        "disagree": 0
       },
       "init": {
-        "agree": 11,
-        "disagree": 4
+        "agree": 12,
+        "disagree": 3
       }
     },
     "model1": {
       "final": {
         "corr": 12,
-        "na": 0,
-        "wrong": 3,
+        "na": 1,
+        "wrong": 2,
         "total": 15,
         "acc": 0.8
       },
       "init": {
-        "corr": 13,
-        "na": 0,
+        "corr": 12,
+        "na": 1,
         "wrong": 2,
         "total": 15,
-        "acc": 0.8666666666666667
+        "acc": 0.8
       }
     },
     "model2": {
       "final": {
         "corr": 12,
-        "na": 0,
-        "wrong": 3,
+        "na": 1,
+        "wrong": 2,
         "total": 15,
         "acc": 0.8
       },
       "init": {
         "corr": 12,
-        "na": 0,
-        "wrong": 3,
+        "na": 1,
+        "wrong": 2,
         "total": 15,
         "acc": 0.8
       }
     }
   },
   "economics": {
-    "corr": 18,
-    "na": 3,
-    "wrong": 5,
+    "corr": 21,
+    "na": 2,
+    "wrong": 3,
     "total": 26,
-    "acc": 0.6923076923076923,
+    "acc": 0.8076923076923077,
     "agreement": {
       "final": {
-        "agree": 23,
-        "disagree": 3
+        "agree": 26,
+        "disagree": 0
       },
       "init": {
         "agree": 21,
@@ -262,27 +262,27 @@
     },
     "model1": {
       "final": {
-        "corr": 18,
-        "na": 3,
-        "wrong": 5,
+        "corr": 21,
+        "na": 2,
+        "wrong": 3,
         "total": 26,
-        "acc": 0.6923076923076923
+        "acc": 0.8076923076923077
       },
       "init": {
         "corr": 21,
-        "na": 3,
-        "wrong": 2,
+        "na": 2,
+        "wrong": 3,
         "total": 26,
         "acc": 0.8076923076923077
       }
     },
     "model2": {
       "final": {
-        "corr": 19,
+        "corr": 21,
         "na": 2,
-        "wrong": 5,
+        "wrong": 3,
         "total": 26,
-        "acc": 0.7307692307692307
+        "acc": 0.8076923076923077
       },
       "init": {
         "corr": 19,
@@ -294,15 +294,15 @@
     }
   },
   "engineering": {
-    "corr": 4,
+    "corr": 5,
     "na": 4,
-    "wrong": 7,
+    "wrong": 6,
     "total": 15,
-    "acc": 0.26666666666666666,
+    "acc": 0.3333333333333333,
     "agreement": {
       "final": {
-        "agree": 12,
-        "disagree": 3
+        "agree": 15,
+        "disagree": 0
       },
       "init": {
         "agree": 5,
@@ -311,58 +311,58 @@
     },
     "model1": {
       "final": {
-        "corr": 4,
-        "na": 3,
-        "wrong": 8,
+        "corr": 5,
+        "na": 4,
+        "wrong": 6,
         "total": 15,
-        "acc": 0.26666666666666666
+        "acc": 0.3333333333333333
       },
       "init": {
-        "corr": 6,
+        "corr": 7,
         "na": 0,
-        "wrong": 9,
+        "wrong": 8,
         "total": 15,
-        "acc": 0.4
+        "acc": 0.4666666666666667
       }
     },
     "model2": {
       "final": {
         "corr": 5,
-        "na": 3,
-        "wrong": 7,
+        "na": 4,
+        "wrong": 6,
         "total": 15,
         "acc": 0.3333333333333333
       },
       "init": {
         "corr": 6,
-        "na": 4,
-        "wrong": 5,
+        "na": 6,
+        "wrong": 3,
         "total": 15,
         "acc": 0.4
       }
     }
   },
   "health": {
-    "corr": 18,
-    "na": 2,
-    "wrong": 10,
+    "corr": 19,
+    "na": 0,
+    "wrong": 11,
     "total": 30,
-    "acc": 0.6,
+    "acc": 0.6333333333333333,
     "agreement": {
       "final": {
-        "agree": 28,
-        "disagree": 2
+        "agree": 30,
+        "disagree": 0
       },
       "init": {
-        "agree": 20,
-        "disagree": 10
+        "agree": 21,
+        "disagree": 9
       }
     },
     "model1": {
       "final": {
         "corr": 19,
-        "na": 1,
-        "wrong": 10,
+        "na": 0,
+        "wrong": 11,
         "total": 30,
         "acc": 0.6333333333333333
       },
@@ -376,11 +376,11 @@
     },
     "model2": {
       "final": {
-        "corr": 18,
-        "na": 1,
+        "corr": 19,
+        "na": 0,
         "wrong": 11,
         "total": 30,
-        "acc": 0.6
+        "acc": 0.6333333333333333
       },
       "init": {
         "corr": 17,
@@ -392,91 +392,91 @@
     }
   },
   "history": {
-    "corr": 17,
-    "na": 4,
-    "wrong": 7,
+    "corr": 18,
+    "na": 1,
+    "wrong": 9,
     "total": 28,
-    "acc": 0.6071428571428571,
+    "acc": 0.6428571428571429,
     "agreement": {
       "final": {
-        "agree": 24,
-        "disagree": 4
+        "agree": 28,
+        "disagree": 0
       },
       "init": {
-        "agree": 21,
-        "disagree": 7
+        "agree": 23,
+        "disagree": 5
       }
     },
     "model1": {
       "final": {
-        "corr": 17,
-        "na": 2,
+        "corr": 18,
+        "na": 1,
         "wrong": 9,
         "total": 28,
-        "acc": 0.6071428571428571
+        "acc": 0.6428571428571429
       },
       "init": {
-        "corr": 19,
+        "corr": 18,
         "na": 0,
-        "wrong": 9,
+        "wrong": 10,
         "total": 28,
-        "acc": 0.6785714285714286
+        "acc": 0.6428571428571429
       }
     },
     "model2": {
       "final": {
         "corr": 18,
-        "na": 2,
-        "wrong": 8,
+        "na": 1,
+        "wrong": 9,
         "total": 28,
         "acc": 0.6428571428571429
       },
       "init": {
-        "corr": 15,
-        "na": 0,
-        "wrong": 13,
+        "corr": 16,
+        "na": 1,
+        "wrong": 11,
         "total": 28,
-        "acc": 0.5357142857142857
+        "acc": 0.5714285714285714
       }
     }
   },
   "law": {
     "corr": 5,
-    "na": 0,
-    "wrong": 24,
+    "na": 1,
+    "wrong": 23,
     "total": 29,
     "acc": 0.1724137931034483,
     "agreement": {
       "final": {
-        "agree": 26,
-        "disagree": 3
+        "agree": 29,
+        "disagree": 0
       },
       "init": {
-        "agree": 11,
-        "disagree": 18
+        "agree": 12,
+        "disagree": 17
       }
     },
     "model1": {
       "final": {
-        "corr": 6,
-        "na": 0,
+        "corr": 5,
+        "na": 1,
         "wrong": 23,
         "total": 29,
-        "acc": 0.20689655172413793
+        "acc": 0.1724137931034483
       },
       "init": {
-        "corr": 11,
+        "corr": 10,
         "na": 0,
-        "wrong": 18,
+        "wrong": 19,
         "total": 29,
-        "acc": 0.3793103448275862
+        "acc": 0.3448275862068966
       }
     },
     "model2": {
       "final": {
         "corr": 5,
-        "na": 0,
-        "wrong": 24,
+        "na": 1,
+        "wrong": 23,
         "total": 29,
         "acc": 0.1724137931034483
       },
@@ -490,15 +490,15 @@
     }
   },
   "math": {
-    "corr": 13,
-    "na": 1,
+    "corr": 14,
+    "na": 0,
     "wrong": 1,
     "total": 15,
-    "acc": 0.8666666666666667,
+    "acc": 0.9333333333333333,
     "agreement": {
       "final": {
-        "agree": 14,
-        "disagree": 1
+        "agree": 15,
+        "disagree": 0
       },
       "init": {
         "agree": 14,
@@ -507,11 +507,11 @@
     },
     "model1": {
       "final": {
-        "corr": 13,
-        "na": 1,
+        "corr": 14,
+        "na": 0,
         "wrong": 1,
         "total": 15,
-        "acc": 0.8666666666666667
+        "acc": 0.9333333333333333
       },
       "init": {
         "corr": 15,
@@ -539,28 +539,28 @@
     }
   },
   "other": {
-    "corr": 19,
-    "na": 2,
+    "corr": 20,
+    "na": 1,
     "wrong": 9,
     "total": 30,
-    "acc": 0.6333333333333333,
+    "acc": 0.6666666666666666,
     "agreement": {
       "final": {
-        "agree": 28,
-        "disagree": 2
+        "agree": 30,
+        "disagree": 0
       },
       "init": {
-        "agree": 24,
-        "disagree": 6
+        "agree": 25,
+        "disagree": 5
       }
     },
     "model1": {
       "final": {
-        "corr": 21,
+        "corr": 20,
         "na": 1,
-        "wrong": 8,
+        "wrong": 9,
         "total": 30,
-        "acc": 0.7
+        "acc": 0.6666666666666666
       },
       "init": {
         "corr": 22,
@@ -572,35 +572,35 @@
     },
     "model2": {
       "final": {
-        "corr": 19,
-        "na": 2,
+        "corr": 20,
+        "na": 1,
         "wrong": 9,
         "total": 30,
-        "acc": 0.6333333333333333
+        "acc": 0.6666666666666666
       },
       "init": {
-        "corr": 20,
+        "corr": 21,
         "na": 2,
-        "wrong": 8,
+        "wrong": 7,
         "total": 30,
-        "acc": 0.6666666666666666
+        "acc": 0.7
       }
     }
   },
   "philosophy": {
     "corr": 7,
-    "na": 1,
-    "wrong": 7,
+    "na": 0,
+    "wrong": 8,
     "total": 15,
     "acc": 0.4666666666666667,
     "agreement": {
       "final": {
-        "agree": 13,
-        "disagree": 2
+        "agree": 14,
+        "disagree": 1
       },
       "init": {
-        "agree": 9,
-        "disagree": 6
+        "agree": 10,
+        "disagree": 5
       }
     },
     "model1": {
@@ -612,18 +612,18 @@
         "acc": 0.4666666666666667
       },
       "init": {
-        "corr": 8,
+        "corr": 6,
         "na": 1,
-        "wrong": 6,
+        "wrong": 8,
         "total": 15,
-        "acc": 0.5333333333333333
+        "acc": 0.4
       }
     },
     "model2": {
       "final": {
         "corr": 7,
-        "na": 1,
-        "wrong": 7,
+        "na": 0,
+        "wrong": 8,
         "total": 15,
         "acc": 0.4666666666666667
       },
@@ -637,15 +637,15 @@
     }
   },
   "physics": {
-    "corr": 10,
-    "na": 2,
-    "wrong": 3,
+    "corr": 11,
+    "na": 0,
+    "wrong": 4,
     "total": 15,
-    "acc": 0.6666666666666666,
+    "acc": 0.7333333333333333,
     "agreement": {
       "final": {
-        "agree": 14,
-        "disagree": 1
+        "agree": 15,
+        "disagree": 0
       },
       "init": {
         "agree": 8,
@@ -655,26 +655,26 @@
     "model1": {
       "final": {
         "corr": 11,
-        "na": 1,
-        "wrong": 3,
+        "na": 0,
+        "wrong": 4,
         "total": 15,
         "acc": 0.7333333333333333
       },
       "init": {
-        "corr": 10,
-        "na": 0,
+        "corr": 9,
+        "na": 1,
         "wrong": 5,
         "total": 15,
-        "acc": 0.6666666666666666
+        "acc": 0.6
       }
     },
     "model2": {
       "final": {
-        "corr": 10,
-        "na": 2,
-        "wrong": 3,
+        "corr": 11,
+        "na": 0,
+        "wrong": 4,
         "total": 15,
-        "acc": 0.6666666666666666
+        "acc": 0.7333333333333333
       },
       "init": {
         "corr": 10,
@@ -686,49 +686,49 @@
     }
   },
   "psychology": {
-    "corr": 17,
+    "corr": 18,
     "na": 0,
-    "wrong": 12,
+    "wrong": 11,
     "total": 29,
-    "acc": 0.5862068965517241,
+    "acc": 0.6206896551724138,
     "agreement": {
       "final": {
-        "agree": 28,
-        "disagree": 1
+        "agree": 29,
+        "disagree": 0
       },
       "init": {
-        "agree": 21,
-        "disagree": 8
+        "agree": 20,
+        "disagree": 9
       }
     },
     "model1": {
       "final": {
-        "corr": 17,
+        "corr": 18,
         "na": 0,
-        "wrong": 12,
+        "wrong": 11,
         "total": 29,
-        "acc": 0.5862068965517241
+        "acc": 0.6206896551724138
       },
       "init": {
-        "corr": 19,
+        "corr": 20,
         "na": 0,
-        "wrong": 10,
+        "wrong": 9,
         "total": 29,
-        "acc": 0.6551724137931034
+        "acc": 0.6896551724137931
       }
     },
     "model2": {
       "final": {
-        "corr": 17,
-        "na": 0,
-        "wrong": 12,
-        "total": 29,
-        "acc": 0.5862068965517241
-      },
-      "init": {
         "corr": 18,
         "na": 0,
         "wrong": 11,
+        "total": 29,
+        "acc": 0.6206896551724138
+      },
+      "init": {
+        "corr": 18,
+        "na": 1,
+        "wrong": 10,
         "total": 29,
         "acc": 0.6206896551724138
       }
