@@ -1,20 +1,14 @@
 import re
 
-def extract_answer(text):
-    """
-    Extract multiple-choice answers (A-J) from LLM responses with improved accuracy.
+from api.extract_pattern import extract_pattern
+
+def _method_answer(sentence):
     
-    Args:
-        text (str): The LLM response text to parse
-        
-    Returns:
-        str: The extracted answer letter (A-J) or "NONE" if no answer is found
-    """
-    # Clean and normalize text
-    cleaned_text = ' '.join(text.split())
+    # Special handling for "I cannot determine the answer" cases
+    cannot_answer_pattern = r"i cannot determine the answer"
     
-    # Split into sentences for better context analysis
-    sentences = re.split(r'[.!?]\s+|\n+', cleaned_text)
+    if re.search(cannot_answer_pattern, sentence.lower()):
+        return None, True
     
     r_optional_the = r"(?:[Tt]he\s+)?"
     r_optional_final = r"(?:[Ff]inal\s+)?"
@@ -93,20 +87,21 @@ def extract_answer(text):
         r"[Aa]ll.*?except.*?\(([A-J])\)",  # Another try at "All options except (K)"
     ]
     
-    # Check each sentence for answer patterns
-    for sentence in reversed(sentences):
-        sentence = sentence.strip()  # Remove leading/trailing whitespace
-        for pattern in answer_patterns:
-            match = re.search(pattern, sentence, re.DOTALL)  # Add re.DOTALL to handle newlines
-            if match:
-                return match.group(1).upper()
-    
+    for pattern in answer_patterns:
+        match = re.search(pattern, sentence, re.DOTALL)  # Add re.DOTALL to handle newlines
+        if match:
+            return match.group(1).upper(), True
+
     # Special handling for "None of the above" cases
     none_pattern = r"(?:answer|choice)\s+is\s*(?:none|neither)|(?:none|neither)\s+of\s+(?:the|these|those)\s+(?:above|options|choices)|none\s+of\s+these\s+(?:are|is)\s+correct"
     
-    for sentence in reversed(sentences):
-        if re.search(none_pattern, sentence.lower()):
-            return "NONE"
+    if re.search(none_pattern, sentence.lower()):
+        return "NONE", True
     
     # If no match found after all patterns
-    return None
+    return None, False
+    
+    
+def extract_answer(text):
+    return extract_pattern(text, _method_answer)
+

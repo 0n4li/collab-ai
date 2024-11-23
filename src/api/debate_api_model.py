@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from api.extract_pattern import extract_agreement
 from api.prompts import system_prompt, initial_response_prompt, perspective_prompt, discussion_prompt, perspective_and_discussion_prompt, final_response_prompt_agreement, final_response_prompt_disagreement, final_answer_prompt, final_response_tag
 from api.api_model import APIModel
 from api.logging_config import setup_app_logger, setup_conversation_logger, setup_noop_logger
@@ -61,19 +62,6 @@ class DebateAPIModel:
             return final_response_prompt_agreement.format(user_question, transcript, self.user_instructions)
         else:
             return final_response_prompt_disagreement.format(user_question, transcript, self.user_instructions)
-    
-    def _check_agreement_status(self, response: str) -> str:
-        """
-        Check the agreement status from a model's response.
-        Returns: 'agree', 'disagree', or 'unknown'
-        """
-        response_lower = response.lower()
-        
-        if "disagree" in response_lower:
-            return "disagree"
-        elif "agree" in response_lower:
-            return "agree"
-        return "unknown"
     
     def _generate_debate_prompt(_, user_instructions: str = None) -> str:
         return system_prompt.format(user_instructions)
@@ -146,7 +134,7 @@ class DebateAPIModel:
             transcript+=f"Model 1 Discussion Round {(current_round + 1)}:\n\n{model1_response_discussion}\n\n"
 
             # Check Model 1's agreement status
-            status1 = self._check_agreement_status(model1_response_discussion)
+            status1 = extract_agreement(model1_response_discussion)
             print(f"{self.model1_name} agreement status - {status1} - after round {current_round + 1}")
             
             # Model 2 responds to Model 1's analysis
@@ -160,7 +148,7 @@ class DebateAPIModel:
             transcript+=f"Model 2 Discussion Round {(current_round + 1)}:\n\n{model2_response_discussion}\n\n"
 
             # Check Model 2's agreement status
-            status2 = self._check_agreement_status(model2_response_discussion)
+            status2 = extract_agreement(model2_response_discussion)
             print(f"{self.model2_name} agreement status - {status2} - after round {current_round + 1}")
 
             # Update agreement status based on both models' responses
