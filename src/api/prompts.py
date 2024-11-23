@@ -42,6 +42,7 @@ IMPORTANT:
 At the end of your response, please state clearly whether you:
 1. AGREE with all my points and the discussion can be concluded, or
 2. DISAGREE with all or some of my points, and want to continue the discussion to convince me with your point(s) of views.
+3. Provide your updated answer based on the above agreement/disagreement.
 
 """
 
@@ -73,6 +74,21 @@ perspective_and_discussion_prompt = _perspective_prompt + _discussion_prompt + _
 final_answer_prompt = """
 
 Based on the discussion, please present your final answer to the question/query/topic suggested by the user.
+
+Please answer in the below format:
+
+```
+Things learned from the discussion:
+...
+
+Things reaffirmed from the discussion:
+...
+
+Things still not clear from the discussion:
+...
+
+Revised response:
+... (Follow the user instructions provided below)
 
 Follow the below instructions from the user:
 ```{}```
