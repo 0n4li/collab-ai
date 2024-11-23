@@ -83,7 +83,7 @@ class DebateAPIModel:
             self.conv_logger.info(f"{message}\n")
 
 
-    def get_response(self, user_question: str, user_instructions: str = None, log_dir: Path = None, log_filename: str = None) -> str:
+    def get_response(self, user_question: str, user_instructions: str = None, log_dir: Path = None, log_filename: str = None):
         """
         Get response through natural discussion between models.
 
