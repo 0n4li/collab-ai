@@ -10,6 +10,71 @@ from typing import Dict, List, Tuple, Optional
 from datasets import load_dataset
 from tqdm import tqdm
 
+mmlu_instruction_prompt = """
+
+The user will ask a similar question. Please follow the below instructions while answering the question.
+
+# Instructions for Answering the User Question
+
+1. EXPECTATIONS
+- The user will ask a question about {}
+- The answer for the question will be one of multiple options (A, B, C, D, E etc.)
+- Exactly one option is guaranteed to be correct
+- You must analyze the question and all options thoroughly
+
+2. ANALYSIS PROCESS
+- Break down the question to understand what is being asked
+- Examine each option systematically
+- Use step-by-step logical reasoning
+- Consider relevant facts, principles, and context
+- Document your thought process clearly
+- No guessing - all conclusions must be supported by reasoning
+
+3. RESPONSE FORMAT
+First: Present your detailed analysis including:
+- Question interpretation
+- Evaluation of each option
+- Key considerations and reasoning steps
+- Evidence supporting or refuting each option
+
+Then: Provide your conclusion in one of two formats:
+```
+If confident in an answer:
+"The answer is (X)" where X is the option letter
+
+If unable to determine with certainty:
+"I cannot determine the answer"
+```
+
+4. IMPORTANT GUIDELINES
+- Always show complete analysis before stating any conclusion
+- Maintain objectivity in evaluating all options
+- If multiple options seem plausible, explain why you cannot determine a single answer
+- Don't make assumptions beyond what's given in the question
+- If crucial information is missing, acknowledge this in your analysis
+
+5. EXAMPLE STRUCTURE
+```
+ANALYSIS:
+[Detailed step-by-step reasoning]
+[Evaluation of each option]
+[Supporting evidence/logic]
+
+CONCLUSION:
+The answer is (B)
+```
+OR
+```
+ANALYSIS:
+[Detailed step-by-step reasoning]
+[Explanation of why certainty cannot be achieved]
+
+CONCLUSION:
+I cannot determine the answer
+```
+
+"""
+
 
 @dataclass
 class Question:
@@ -119,11 +184,8 @@ class MMPROEvaluator:
             )
             
         prompt_parts.extend([
-            "\n\nThe user is expected to ask a similar kind of question along with options for the correct answer.\n",
-            "\nYou are supposed to deliberate, think step by step and then answer the user's question by choosing from the provided options.\n",
-            "\nBefore choosing the answer, please present your indepth analysis.\n",
-            "\nIf you are able to choose the correct answer from the provided options, please output the answer as `The answer is (X)` in the end.\n",
-            "\nHowever, if you are unable to choose the correct answer, please output `I cannot determine the answer`.\n"
+            mmlu_instruction_prompt.format(category),
+            "\n\n"
         ])
         
         return "".join(prompt_parts)
@@ -134,7 +196,7 @@ class MMPROEvaluator:
         if not retake and question.question_id in existing_results:
             result = existing_results[question.question_id]
             if question.question == result["question"]:
-                from extract_answer import extract_answer
+                from benchmarks.extract_answer import extract_answer
                 return self._reevaluate_answers(result, extract_answer)
 
         prompt = self.build_prompt(question.category, cot_examples)
@@ -161,8 +223,15 @@ class MMPROEvaluator:
             from benchmarks.extract_answer import extract_answer
             predictions = tuple(map(extract_answer, responses))
             
-            print(f"Question#{question.question_id} answered. "
-                  f"Consensus: {predictions[0] == predictions[1]}")
+            answer_stats = f"""            
+            Question#{question.question_id} answered:
+            Consensus: {predictions[0] == predictions[1]}
+            Initial Answers: [{predictions[2]} {"✓" if predictions[2] == question.answer else "✗"}, {predictions[3]} {"✓" if predictions[2] == question.answer else "✗"}]
+            Final Answers: [{predictions[0]} {"✓" if predictions[0] == question.answer else "✗"}, {predictions[1]} {"✓" if predictions[1] == question.answer else "✗"}]
+            Actual Answer: {question.answer}
+            """
+            
+            print(answer_stats)
             
             return (
                 predictions[:2],
@@ -304,7 +373,7 @@ class MMPROEvaluator:
             
         summary = json.loads(summary_path.read_text())
         
-        from statistics import update_summary
+        from benchmarks.statistics_summary import update_summary
         update_summary(summary, subject, results)
         
         # Sort summary with 'overall' first
