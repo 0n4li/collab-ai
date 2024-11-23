@@ -9,6 +9,7 @@ logs/*
 
 # Test
 test*.*
+*.xls*
 
 # Cache
 .DS_Store
