@@ -17,7 +17,8 @@ The Debate API Model facilitates a natural dialogue-based discussion between two
 *   **Configurable User Instructions:** Allows users to provide specific instructions to guide the debate and tailor the final response.
 *   **Conversation Logging:** Captures the entire debate transcript, including individual model responses, agreement statuses, and the final synthesized answer for analysis and auditing.
 
-_Please Note_: It is possible that the two models do not reach a consensus on a topic and choose to return different answers.
+_Please Note_: It is possible that the two models do not reach a consensus on a topic and choose to return different answers. Also, different runs for the same question and user instructions may return different answers.
+
 
 ### Setup
 
