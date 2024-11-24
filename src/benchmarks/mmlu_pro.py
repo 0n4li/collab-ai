@@ -61,7 +61,7 @@ ANALYSIS:
 [Supporting evidence/logic]
 
 CONCLUSION:
-The answer is (B)
+The answer is (B) [Choose only one answer]
 ```
 OR
 ```
@@ -293,7 +293,7 @@ class MMPROEvaluator:
                     results[question.question_id] = question.to_dict()
                     self.save_results(subject, results, "question_id")
                     
-            self.update_summary(subject, results)
+            self.update_statistics(subject, results)
             
     def get_question_data(self, subjects: Optional[List[str]] = None, question_number: int = -1, batch_size: int = sys.maxsize):
         """Evaluate a single question by its ID"""
@@ -342,7 +342,7 @@ class MMPROEvaluator:
             question.init_outputs = init_response
             results[question.question_id] = question.to_dict()
             self.save_results(subject, results, "question_id")
-            self.update_summary(subject, results)
+            self.update_statistics(subject, results)
             return
                     
         print(f"Question#{question_number} not found")
@@ -364,17 +364,20 @@ class MMPROEvaluator:
             output_data.sort(key=lambda x: x.get(sort_key))
         filepath.write_text(json.dumps(output_data, indent=2))
 
-    def update_summary(self, subject: str, results: Dict):
+    def update_statistics(self, subject: str, results: Dict):
         """Update and save summary statistics"""
-        summary_path = self.output_dir / "results_summary.json"
+        statistics_path = self.output_dir / "results_summary.json"
         
-        if not summary_path.exists():
-            summary_path.write_text("{}")
+        if not statistics_path.exists():
+            statistics_path.write_text("{}")
             
-        summary = json.loads(summary_path.read_text())
+        summary = json.loads(statistics_path.read_text())
         
-        from benchmarks.statistics_summary import update_summary
-        update_summary(summary, subject, results)
+        from benchmarks.statistics_summary import calculate_subject_statistics, calculate_all_statistics
+        subject_stats = calculate_subject_statistics(results)
+        summary[subject] = subject_stats
+        overall_stats = calculate_all_statistics(summary)
+        summary["overall"] = overall_stats
         
         # Sort summary with 'overall' first
         sorted_summary = OrderedDict()
@@ -383,7 +386,7 @@ class MMPROEvaluator:
         for key in sorted(k for k in summary if k != 'overall'):
             sorted_summary[key] = summary[key]
             
-        summary_path.write_text(json.dumps(sorted_summary, indent=2))
+        statistics_path.write_text(json.dumps(sorted_summary, indent=2))
 
 
 def main(args=None):

@@ -1,161 +1,117 @@
-def update_summary(summary, subject, results):
-    """
-    Generate summary statistics for model predictions and save to file.
-    Creates both subject-specific and overall summaries.
-    
-    Args:
-        summary (dict): Dictionary containing summary data
-        subject (str): Subject identifier
-        results (dict): Dictionary of prediction results
-        
-    Raises:
-        ValueError: If input parameters are invalid
-        KeyError: If required keys are missing in results
-    """
-    if not isinstance(summary, dict):
-        raise ValueError("Summary must be a dictionary")
-    if not isinstance(subject, str) or not subject:
-        raise ValueError("Subject must be a non-empty string")
-    if not isinstance(results, dict):
-        raise ValueError("Results must be a dictionary")
-        
-    # Initialize statistics dictionaries with deep copies
-    stats = {"corr": 0, "na": 0, "wrong": 0, "total": 0, "acc": 0.0}
-    model_stats = {
-        "final": dict(stats),
-        "init": dict(stats)
-    }
-    model1 = {k: dict(v) for k, v in model_stats.items()}
-    model2 = {k: dict(v) for k, v in model_stats.items()}
-    agreement = {
-        "final": {"agree": 0, "disagree": 0},
-        "init": {"agree": 0, "disagree": 0}
-    }
-    
-    # Process results for current subject
-    for result_id, result in results.items():
-        if not isinstance(result, dict):
-            print(f"Skipping invalid result for {result_id}")
-            continue
-            
-        # Process final predictions
-        if result.get("pred") is not None:
-            pred1, pred2 = result["pred"]
-            answer = result.get("answer")
-            
-            if pred1 == pred2:
-                agreement["final"]["agree"] += 1
-            else:
-                agreement["final"]["disagree"] += 1
-        
-            # Update correctness counters
-            if pred1 == answer and pred2 == answer:
-                stats["corr"] += 1
-            elif pred1 is None or pred2 is None:
-                stats["na"] += 1
-            else:
-                stats["wrong"] += 1
-                
-            # Update model-specific stats
-            update_model_stats(model1["final"], pred1, answer)
-            update_model_stats(model2["final"], pred2, answer)
-        
-        # Process initial predictions similarly
-        if result.get("init_pred") is not None:
-            init_pred1, init_pred2 = result["init_pred"]
-            answer = result.get("answer")
-            
-            if init_pred1 == init_pred2:
-                agreement["init"]["agree"] += 1
-            else:
-                agreement["init"]["disagree"] += 1
-            
-            update_model_stats(model1["init"], init_pred1, answer)
-            update_model_stats(model2["init"], init_pred2, answer)
-    
-    # Calculate accuracies
-    stats["total"] = stats["corr"] + stats["na"] + stats["wrong"]
-    stats["acc"] = calculate_accuracy(stats["corr"], stats["total"])
-    
-    for model in [model1, model2]:
-        for phase in ["final", "init"]:
-            phase_stats = model[phase]
-            phase_stats["total"] = phase_stats["corr"] + phase_stats["na"] + phase_stats["wrong"]
-            phase_stats["acc"] = calculate_accuracy(phase_stats["corr"], phase_stats["total"])
-    
-    # Create subject summary
-    subject_summary = {
-        **stats,
-        "agreement": agreement,
-        "model1": model1,
-        "model2": model2
-    }
-    
-    # Update summary with new subject data
-    summary[subject] = subject_summary
-    
-    # Calculate overall statistics
-    calculate_overall_statistics(summary)
-    
+import copy
 
-def update_model_stats(stats, pred, answer):
-    """Helper function to update model statistics."""
-    if pred == answer:
-        stats["corr"] += 1
-    elif pred is None:
-        stats["na"] += 1
-    else:
-        stats["wrong"] += 1
+stats = {"corr": 0, "idk": 0, "na": 0, "wrong": 0, "total": 0, "acc": 0.0}
+agreement_stats = { "agree": 0, "disagree": 0, "total": 0, "pct": 0.0 }
 
-def calculate_accuracy(correct, total):
+def _calculate_accuracy(correct, total):
     """Helper function to calculate accuracy."""
     return 0.0 if total == 0 else correct / total
 
-def calculate_overall_statistics(summary):
-    """Calculate overall statistics across all subjects."""
-    overall = {
-        "corr": 0, "na": 0, "wrong": 0, "total": 0, "acc": 0.0,
-        "model1": {"final": dict(), "init": dict()},
-        "model2": {"final": dict(), "init": dict()},
-        "agreement": {"final": {"agree": 0, "disagree": 0}, 
-                     "init": {"agree": 0, "disagree": 0}}
+def _update_prediction_totals(stats_dict):
+    stats_dict["total"] = stats_dict["corr"] + stats_dict["idk"] + stats_dict["na"] + stats_dict["wrong"]
+    stats_dict["acc"] = _calculate_accuracy(stats_dict["corr"], stats_dict["total"])
+
+
+def _update_prediction_stats(stats_dict, answer, pred1, pred2=None):
+    if pred2 == None:
+        pred2 = pred1
+    if pred1 == answer and pred2 == answer:
+        stats_dict["corr"] += 1
+    elif pred1 == "IDK" or pred2 == "IDK":
+        stats_dict["idk"] += 1
+    elif pred1 == "NA" or pred2 == "NA":
+        stats_dict["na"] += 1
+    else:
+        stats_dict["wrong"] += 1
+    _update_prediction_totals(stats_dict)
+    
+    
+def _add_prediction_stats(overall_dict, stats_dict):
+    overall_dict["corr"] += stats_dict.get("corr", 0)
+    overall_dict["idk"] += stats_dict.get("idk", 0)
+    overall_dict["na"] += stats_dict.get("na", 0)
+    overall_dict["wrong"] += stats_dict.get("wrong", 0)
+    _update_prediction_totals(overall_dict)
+    
+    
+def _update_agreement_totals(agreement_dict):
+    agreement_dict["total"] = agreement_dict["agree"] + agreement_dict["disagree"]
+    agreement_dict["pct"] = agreement_dict["agree"] / agreement_dict["total"]
+
+
+def _update_agreement_stats(agreement_dict, agreement):
+    if agreement:
+        agreement_dict["agree"] += 1
+    else:
+        agreement_dict["disagree"] += 1
+    _update_agreement_totals(agreement_dict)
+    
+
+def _add_agreement_stats(overall_agreement_dict, subject_agreement_dict):
+    overall_agreement_dict["agree"] += subject_agreement_dict.get("agree", 0)
+    overall_agreement_dict["disagree"] += subject_agreement_dict.get("disagree", 0)
+    _update_agreement_totals(overall_agreement_dict)
+    
+
+def _build_stats():
+    global stats, agreement_stats
+    stats_dict = copy.deepcopy(stats)
+    model_stats = {
+        "final": copy.deepcopy(stats),
+        "init": copy.deepcopy(stats)
     }
+    model1_stats = copy.deepcopy(model_stats)
+    model2_stats = copy.deepcopy(model_stats)
+    agreement = {
+        "final": copy.deepcopy(agreement_stats),
+        "init": copy.deepcopy(agreement_stats)
+    }
+    stats_dict["agreement"] = agreement
+    stats_dict["model1"] = model1_stats
+    stats_dict["model2"] = model2_stats
+    return stats_dict
+
+
+def calculate_subject_statistics(results):
+    subject_stats = _build_stats()
+    model1_stats = subject_stats["model1"]
+    model2_stats = subject_stats["model2"]
+    agreement = subject_stats["agreement"]
     
-    for subj, stats in summary.items():
-        if subj == "overall":
+    for _, result in results.items():
+        pred_tuple = result.get("pred")
+        if pred_tuple is not None:
+            pred1, pred2 = pred_tuple
+            answer = result.get("answer")
+            _update_prediction_stats(subject_stats, answer, pred1, pred2)
+            _update_prediction_stats(model1_stats["final"], answer, pred1)
+            _update_prediction_stats(model2_stats["final"], answer, pred2)
+            _update_agreement_stats(agreement["final"], pred1 == pred2)
+        
+        init_pred_tuple = result.get("init_pred")
+        if init_pred_tuple is not None:
+            init_pred1, init_pred2 = init_pred_tuple
+            answer = result.get("answer")
+            _update_prediction_stats(model1_stats["init"], answer, init_pred1)
+            _update_prediction_stats(model2_stats["init"], answer, init_pred2)
+            _update_agreement_stats(agreement["init"], init_pred1 == init_pred2)
+
+    return subject_stats
+
+def calculate_all_statistics(summary):
+    overall_stats = _build_stats()
+    model1_stats = overall_stats["model1"]
+    model2_stats = overall_stats["model2"]
+    agreement = overall_stats["agreement"]
+    
+    for subject, subject_stats in summary.items():
+        if subject == "overall":
             continue
-            
-        overall["corr"] += stats["corr"]
-        overall["na"] += stats["na"]
-        overall["wrong"] += stats["wrong"]
         
-        for model_key in ["model1", "model2"]:
-            for phase in ["final", "init"]:
-                for stat_key in ["corr", "na", "wrong"]:
-                    overall[model_key][phase][stat_key] = (
-                        overall[model_key][phase].get(stat_key, 0) +
-                        stats[model_key][phase][stat_key]
-                    )
-        
+        _add_prediction_stats(overall_stats, subject_stats)
         for phase in ["final", "init"]:
-            overall["agreement"][phase]["agree"] += stats["agreement"][phase]["agree"]
-            overall["agreement"][phase]["disagree"] += stats["agreement"][phase]["disagree"]
+            _add_prediction_stats(model1_stats[phase], subject_stats["model1"][phase])
+            _add_prediction_stats(model2_stats[phase], subject_stats["model2"][phase])
+            _add_agreement_stats(agreement[phase], subject_stats["agreement"][phase])
     
-    # Calculate overall accuracies
-    overall["total"] = overall["corr"] + overall["na"] + overall["wrong"]
-    overall["acc"] = calculate_accuracy(overall["corr"], overall["total"])
-    
-    for model_key in ["model1", "model2"]:
-        for phase in ["final", "init"]:
-            phase_stats = overall[model_key][phase]
-            phase_stats["total"] = (
-                phase_stats.get("corr", 0) + 
-                phase_stats.get("na", 0) + 
-                phase_stats.get("wrong", 0)
-            )
-            phase_stats["acc"] = calculate_accuracy(
-                phase_stats.get("corr", 0), 
-                phase_stats["total"]
-            )
-    
-    summary["overall"] = overall
+    return overall_stats
