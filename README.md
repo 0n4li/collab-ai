@@ -65,6 +65,8 @@ In the above usage, default models `openai/gpt-4o-mini` and `google/gemini-flash
 *   [r-in-mulbrerry.md](example_results/r-in-mullberry.md): Initially `openai/gpt4o-mini` gives an incorrect count of the 'r's by assuming the word `mulberry`. However, it is corrected by `google/gemini-flash-1.5` that the word is `mulbrerry`. Eventually, both return the correct answer.
 *   [s-in-strawberry.md](example_results/s-in-strawberry.md): Both models return the correct answer initially and in collaboration as well.
 
+_Please Note_: The `user_instructions` play a very important role in the outcome.
+
 **Below are the supported parameters:**
 1. `--question` or `-q`: The question to be asked to the model
 2. `--user_instructions` or `-u`: (Optional) This acts like a system prompt
@@ -111,6 +113,11 @@ debate_model.close()
 *   Support for more methodologies for collaboration.
 *   Support for followup questions.
 *   Web interface/API endpoint for easier interaction.
+
+## Limitations
+
+This approach doesn't magically improve the underlying models. If the models are themselves limited in their own understanding of the topic at hand, most likely the collaborative answer will also be incorrect. Sometimes a model returns the correct answer, but using incorrect logic. It gets highlighted through the discussion and the model gets confused and is no longer able to stay firm on the original answer.
+
 
 ## Contributing
 
