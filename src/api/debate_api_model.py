@@ -10,20 +10,23 @@ logger = setup_app_logger(__name__)
 separater = "\n---\n\n"
 
 class DebateAPIModel:
-    def __init__(self, model1_name: str, model2_name: str):
+    def __init__(self, model1_name: str, model2_name: str, min_rounds: int = 1, max_rounds: int = 5):
         """
         Initialize two AI models for natural dialogue-based discussion.
 
         Args:
             model1_name: Name of the first model
             model2_name: Name of the second model
+            min_rounds: Minimum number of discussion rounds
+            max_rounds: Maximum number of discussion rounds
         """
         self.user_instructions = ""
         self.model1 = APIModel(model=model1_name)
         self.model2 = APIModel(model=model2_name)
         self.model1_name = model1_name
         self.model2_name = model2_name
-        self.max_discussion_rounds = 5  # Maximum number of discussion rounds
+        self.min_discussion_rounds = min_rounds  # Minimum number of discussion rounds
+        self.max_discussion_rounds = max_rounds  # Maximum number of discussion rounds
         
         logger.info(f"DebateAPIModel initialized with {model1_name} and {model2_name}")
 
@@ -106,7 +109,7 @@ class DebateAPIModel:
         self._clog(f"### {self.model1_name} Initial Response:")
         self._clog(model1_initial_response)
         self._clog(separater)
-        print(f"{self.model1_name} gave an initial response")
+        print(f"‣ {self.model1_name} gave an initial response")
         
         transcript+=f"Model 1 Initial Response:\n\n{model1_initial_response}\n\n"
 
@@ -115,7 +118,7 @@ class DebateAPIModel:
         self._clog(f"### {self.model2_name} Initial Response:")
         self._clog(model2_initial_response)
         self._clog(separater)
-        print(f"{self.model2_name} gave an initial response")
+        print(f"‣ {self.model2_name} gave an initial response")
         
         transcript+=f"Model 2 Initial Response:\n\n{model2_initial_response}\n\n"
         
@@ -137,7 +140,7 @@ class DebateAPIModel:
 
             # Check Model 1's agreement status
             status1 = extract_agreement(model1_response_discussion)
-            print(f"{self.model1_name} agreement status - {status1} - after round {current_round + 1}")
+            print(f"‣ {self.model1_name} agreement status - {status1} - after round {current_round + 1}")
             
             # Model 2 responds to Model 1's analysis
             print(f"🧠 Getting Discussion Response Round {current_round + 1} from {self.model2_name}")
@@ -152,10 +155,10 @@ class DebateAPIModel:
 
             # Check Model 2's agreement status
             status2 = extract_agreement(model2_response_discussion)
-            print(f"{self.model2_name} agreement status - {status2} - after round {current_round + 1}")
+            print(f"‣ {self.model2_name} agreement status - {status2} - after round {current_round + 1}")
 
             # Update agreement status based on both models' responses
-            if status1 == "agree" and status2 == "agree" and (current_round + 1) > 1:
+            if status1 == "agree" and status2 == "agree" and (current_round + 1) > self.min_discussion_rounds:
                 agreement_status = "agree"
                 break
             
@@ -165,7 +168,7 @@ class DebateAPIModel:
         self._clog(f"Agreement status: {agreement_status} - Model 1 ({status1}) / Model 2 ({status2})")
         self._clog(separater)
         transcript+=f"Agreement status: {agreement_status} - Model 1 ({status1}) / Model 2 ({status2})"
-        print(f"Agreement status: {agreement_status} - Model 1 ({status1}) / Model 2 ({status2})")
+        print(f"‣ Agreement status: {agreement_status} - Model 1 ({status1}) / Model 2 ({status2})")
         
         # Final perspectives
         print(f"🧠 Getting final Response from {self.model1_name}")
@@ -173,7 +176,7 @@ class DebateAPIModel:
         self._clog(f"### {self.model1_name} Final Response:")
         self._clog(model1_final_response)
         self._clog(separater)
-        print(f"{self.model1_name} gave the final response")
+        print(f"‣ {self.model1_name} gave the final response")
         
         transcript_1 = transcript + f"## {final_response_tag}:\n\n{model1_final_response}\n\n"
 
@@ -182,7 +185,7 @@ class DebateAPIModel:
         self._clog(f"### {self.model2_name} Final Response:")
         self._clog(model2_final_response)
         self._clog(separater)
-        print(f"{self.model2_name} gave the final response")
+        print(f"‣ {self.model2_name} gave the final response")
         
         transcript_2 = transcript + f"## {final_response_tag}:\n\n{model2_final_response}\n\n"
         
@@ -201,7 +204,7 @@ class DebateAPIModel:
         self._clog(f"## {self.model1_name} Collaborative Answer:")
         self._clog(model1_collaborative_response)
         self._clog(separater)
-        print(f"{self.model1_name} collaborative answer received")
+        print(f"‣ {self.model1_name} collaborative answer received")
 
         # The final response from Model 2 based on the transcript
         print(f"🧠 Getting the collaborative Response from {self.model2_name}")
@@ -211,7 +214,7 @@ class DebateAPIModel:
         self._clog(f"## {self.model2_name} Collaborative Answer:")
         self._clog(model2_collaborative_response)
         self._clog(separater)
-        print(f"{self.model2_name} collaborative answer received")
+        print(f"‣ {self.model2_name} collaborative answer received")
 
         self._close_conversation_logger()
 
