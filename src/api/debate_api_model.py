@@ -30,8 +30,9 @@ class DebateAPIModel:
     def _setup_conversation_logger(self, log_dir: Path=None, log_filename: str=None):
         """Set up a new logger for the current conversation."""
         if log_filename is None:
-            return setup_noop_logger()
-        self.conv_logger = setup_conversation_logger(self.model1_name, self.model2_name, log_dir=log_dir, log_filename=log_filename)
+            self.conv_logger = setup_noop_logger()
+        else:
+            self.conv_logger = setup_conversation_logger(self.model1_name, self.model2_name, log_dir=log_dir, log_filename=log_filename)
 
     def _close_conversation_logger(self):
         """Close the current conversation logger."""
