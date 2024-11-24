@@ -146,6 +146,7 @@ We ran the `DebateAPIModel` on 364 random questions from [MMLU-Pro dataset](http
 
 *   [Question#2893.md](mmlu-pro--4o-mini--flash-1-5/answers/biology/Question%232893.md): In this `biology` question example, `gpt-4o-mini` correctly identified the flaws in `gemini-flash-1.5` reasoning and guided towards the correct answer. Check the transcript [evaluation](mmlu-pro--4o-mini--flash-1-5/evaluations/Question%232893.md) by Claude 3.5 Sonnet.
 *   [Question#9342.md](mmlu-pro--4o-mini--flash-1-5/answers/physics/Question%239342.md): In this `physics` question example, `gpt-4o-mini` tried to convince `gemini-flash-1.5` through incorrect/shallow calculations, but `gemini-flash-1.5` remained firm on its reasoning and guided towards the correct answer. Check the transcript [evaluation](mmlu-pro--4o-mini--flash-1-5/evaluations/Question%239342.md) by Claude 3.5 Sonnet.
+*   [Question#4342.md](mmlu-pro--4o-mini--flash-1-5/answers/chemistry/Question%234342.md): In this `chemistry` question example, both models were incorrect in their calculations and arrived at different answers, however, after the discussion, they both arrived at the correct answer. Check the transcript [evaluation](mmlu-pro--4o-mini--flash-1-5/evaluations/Question%234342.md) by Claude 3.5 Sonnet.
 
 #### Sample Run Command for MMLU PRO
 
