@@ -118,11 +118,9 @@ debate_model.close()
 We ran the `DebateAPIModel` on 364 random questions from [MMLU-Pro dataset](https://huggingface.co/datasets/TIGER-Lab/MMLU-Pro). Below are the results:
 
 
-**Sample Run Command for MMLU PRO**
+#### Sample Run Command for MMLU PRO
 
-Below is the sample usage for MMU Pro benchmark.
-
-#### Random Question
+##### Ask a Random Question
 
 ```bash
 python src/run_mmlu_pro.py -m1 openai/gpt-4o-mini -m2 google/gemini-flash-1.5 -s business -b 1 -o mmlu-pro-4o-mini--flash-1-5
@@ -132,7 +130,7 @@ python src/run_mmlu_pro.py -m1 openai/gpt-4o-mini -m2 google/gemini-flash-1.5 -s
 *   Supported categories can be checked from MMLU-Pro dataset. (There are 14 currently)
 *   Use `-b` parameter for multiple questions.
 
-#### Specific Question
+##### Ask a Specific Question
 
 ```bash
 python src/run_mmlu_pro.py -m1 openai/gpt-4o-mini -m2 google/gemini-flash-1.5 -s physics -q 9206 -o mmlu-pro-4o-mini--flash-1-5
