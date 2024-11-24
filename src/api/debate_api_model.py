@@ -101,7 +101,7 @@ class DebateAPIModel:
         self.start(user_instructions=debate_prompt)
 
         # Initial perspectives
-        print(f"Getting initial Response from {self.model1_name}")
+        print(f"🧠 Getting initial Response from {self.model1_name}")
         model1_initial_response = self.model1.send_message(self._format_initial_response_prompt(user_question))
         self._clog(f"### {self.model1_name} Initial Response:")
         self._clog(model1_initial_response)
@@ -110,7 +110,7 @@ class DebateAPIModel:
         
         transcript+=f"Model 1 Initial Response:\n\n{model1_initial_response}\n\n"
 
-        print(f"Getting initial Response from {self.model2_name}")
+        print(f"🧠 Getting initial Response from {self.model2_name}")
         model2_initial_response = self.model2.send_message(self._format_initial_response_prompt(user_question))
         self._clog(f"### {self.model2_name} Initial Response:")
         self._clog(model2_initial_response)
@@ -124,7 +124,8 @@ class DebateAPIModel:
 
         # Always have at least one discussion round
         while current_round < self.max_discussion_rounds:
-            # Model 1 responds to Model 2's perspective
+            # Model 1 responds to Model 2's analysis
+            print(f"🧠 Getting Discussion Response Round {current_round + 1} from {self.model1_name}")
             model1_response_discussion = self.model1.send_message(
                 self._format_perspective_prompt(model2_initial_response) if current_round == 0 else
                 self._format_discussion_prompt(model2_response_discussion)
@@ -139,6 +140,7 @@ class DebateAPIModel:
             print(f"{self.model1_name} agreement status - {status1} - after round {current_round + 1}")
             
             # Model 2 responds to Model 1's analysis
+            print(f"🧠 Getting Discussion Response Round {current_round + 1} from {self.model2_name}")
             model2_response_discussion = self.model2.send_message(
                 self._format_perspective_and_discussion_prompt(model1_initial_response, model1_response_discussion) if current_round == 0 else
                 self._format_discussion_prompt(model1_response_discussion)
@@ -166,7 +168,7 @@ class DebateAPIModel:
         print(f"Agreement status: {agreement_status} - Model 1 ({status1}) / Model 2 ({status2})")
         
         # Final perspectives
-        print(f"Getting final Response from {self.model1_name}")
+        print(f"🧠 Getting final Response from {self.model1_name}")
         model1_final_response = self.model1.send_message(self._format_final_answer_prompt())
         self._clog(f"### {self.model1_name} Final Response:")
         self._clog(model1_final_response)
@@ -175,7 +177,7 @@ class DebateAPIModel:
         
         transcript_1 = transcript + f"## {final_response_tag}:\n\n{model1_final_response}\n\n"
 
-        print(f"Getting final Response from {self.model2_name}")
+        print(f"🧠 Getting final Response from {self.model2_name}")
         model2_final_response = self.model2.send_message(self._format_final_answer_prompt())
         self._clog(f"### {self.model2_name} Final Response:")
         self._clog(model2_final_response)
@@ -191,6 +193,8 @@ class DebateAPIModel:
         # self._clog(separater)
         # print(f"Full transcript:\n\n{transcript}\n")
         
+        # The final response from Model 1 based on the transcript
+        print(f"🧠 Getting the collaborative Response from {self.model1_name}")
         model1_collaborative_response = self.model1.send_message(
             self._format_final_response_prompt(user_question, transcript_1, agreement_status)                                                 
         )
@@ -199,6 +203,8 @@ class DebateAPIModel:
         self._clog(separater)
         print(f"{self.model1_name} collaborative answer received")
 
+        # The final response from Model 2 based on the transcript
+        print(f"🧠 Getting the collaborative Response from {self.model2_name}")
         model2_collaborative_response = self.model2.send_message(
             self._format_final_response_prompt(user_question, transcript_2, agreement_status)
         )
@@ -222,22 +228,3 @@ class DebateAPIModel:
         self.model1.close_conversation()
         self.model2.close_conversation()
 
-
-def main():
-    # Example usage
-    debate_model = DebateAPIModel(
-        model1_name="openai/gpt-4o-mini",
-        model2_name="google/gemini-flash-1.5",
-        user_instructions="Engage in thoughtful discussion with focus on understanding and truth-seeking.",
-    )
-
-    print("\nQuestion: What is the most efficient sorting algorithm for large datasets?\n")
-    response = debate_model.get_response(
-        "What is the most efficient sorting algorithm for large datasets?"
-    )
-    print("\nResponse:", response)
-    debate_model.close()
-
-
-if __name__ == "__main__":
-    main()
