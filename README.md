@@ -88,6 +88,8 @@ from debate_api_model import DebateAPIModel
 debate_model = DebateAPIModel(
     model1_name="openai/gpt-4o-mini", #Any supported model can be used
     model2_name="google/gemini-flash-1.5", #Any supported model can be used
+    min_rounds=2, #Minimum rounds of discussion (Optional)
+    max_rounds=5, #Maximum rounds of discussion (Optional)
 )
 
 # Specify the user question and any additional instructions
@@ -109,11 +111,43 @@ print("\nModel 2 Initial Response:", response[3])
 debate_model.close()
 ```
 
+## Benchmarks
+
+### MMLU Pro
+
+We ran the `DebateAPIModel` on 364 random questions from [MMLU-Pro dataset](https://huggingface.co/datasets/TIGER-Lab/MMLU-Pro). Below are the results:
+
+
+**Sample Run Command for MMLU PRO**
+
+Below is the sample usage for MMU Pro benchmark.
+
+#### Random Question
+
+```bash
+python src/run_mmlu_pro.py -m1 openai/gpt-4o-mini -m2 google/gemini-flash-1.5 -s business -b 1 -o mmlu-pro-4o-mini--flash-1-5
+```
+
+*   This will ask a random question from `business` category.
+*   Supported categories can be checked from MMLU-Pro dataset. (There are 14 currently)
+*   Use `-b` parameter for multiple questions.
+
+#### Specific Question
+
+```bash
+python src/run_mmlu_pro.py -m1 openai/gpt-4o-mini -m2 google/gemini-flash-1.5 -s physics -q 9206 -o mmlu-pro-4o-mini--flash-1-5
+```
+
+*   This will ask a specific question based on `physics` category and question number `9206`
+*   List of questions can be found from MMLU-Pro dataset.
+
 ## Future Enhancements
 
 *   Support for more methodologies for collaboration.
 *   Support for followup questions.
 *   Web interface/API endpoint for easier interaction.
+*   Run on more benchmarks like LiveBench.
+
 
 ## Limitations
 
