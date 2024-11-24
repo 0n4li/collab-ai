@@ -142,6 +142,10 @@ We ran the `DebateAPIModel` on 364 random questions from [MMLU-Pro dataset](http
 *   The detailed statistics can be found [here](mmlu-pro--4o-mini--flash-1-5/results_summary.json).
 *   _Please Note_: Some questions were re-taken as we improved the prompts.
 
+** Below are some samples: **
+
+*   [Question#2893.md](mmlu-pro--4o-mini--flash-1-5/answers/biology/Question#2893.md): In this example, `gpt-4o-mini` correctly identified the flaws in `gemini-flash-1.5` reasoning and guided towards the correct answer. Check the transcript [evaluation](mmlu-pro--4o-mini--flash-1-5/evaluations/Question#2893.md) by Claude 3.5 Sonnet.
+
 #### Sample Run Command for MMLU PRO
 
 ##### Ask a Random Question
