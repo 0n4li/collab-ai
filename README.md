@@ -17,6 +17,8 @@ The Debate API Model facilitates a natural dialogue-based discussion between two
 *   **Configurable User Instructions:** Allows users to provide specific instructions to guide the debate and tailor the final response.
 *   **Conversation Logging:** Captures the entire debate transcript, including individual model responses, agreement statuses, and the final synthesized answer for analysis and auditing.
 
+_Please Note_: It is possible that the two models do not reach a consensus on a topic and choose to return different answers.
+
 ### Setup
 
 1. **Clone the Repository:**
@@ -86,14 +88,13 @@ from debate_api_model import DebateAPIModel
 debate_model = DebateAPIModel(
     model1_name="openai/gpt-4o-mini", #Any supported model can be used
     model2_name="google/gemini-flash-1.5", #Any supported model can be used
-    user_instructions="Engage in thoughtful discussion with focus on understanding and truth-seeking."
 )
 
 # Specify the user question and any additional instructions
 user_question = "What is the most efficient sorting algorithm for large datasets?"
 user_instructions = "Focus on time complexity and practical applications."
-log_dir = Path("./logs") # Specify the directory to save logs
-log_filename = "debate_log"
+log_dir = Path("./logs") # Specify the directory to save logs (Optional)
+log_filename = "debate_log" # Specify the name of the log file (Optional)
 
 # Get the response through natural discussion between models
 response = debate_model.get_response(user_question, user_instructions, log_dir, log_filename)
