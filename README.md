@@ -146,7 +146,10 @@ We ran the `DebateAPIModel` on 364 random questions from [MMLU-Pro dataset](http
 
 *   [Question#2893.md](mmlu-pro--4o-mini--flash-1-5/answers/biology/Question%232893.md): In this `biology` question example, `gpt-4o-mini` correctly identified the flaws in `gemini-flash-1.5` reasoning and guided towards the correct answer. Check the transcript [evaluation](mmlu-pro--4o-mini--flash-1-5/evaluations/Question%232893.md) by Claude 3.5 Sonnet.
 *   [Question#9342.md](mmlu-pro--4o-mini--flash-1-5/answers/physics/Question%239342.md): In this `physics` question example, `gpt-4o-mini` tried to convince `gemini-flash-1.5` through incorrect/shallow calculations, but `gemini-flash-1.5` remained firm on its reasoning and guided towards the correct answer. Check the transcript [evaluation](mmlu-pro--4o-mini--flash-1-5/evaluations/Question%239342.md) by Claude 3.5 Sonnet.
-*   [Question#4342.md](mmlu-pro--4o-mini--flash-1-5/answers/chemistry/Question%234342.md): In this `chemistry` question example, both models were incorrect in their calculations and arrived at different answers, however, after the discussion, they both arrived at the correct answer. Check the transcript [evaluation](mmlu-pro--4o-mini--flash-1-5/evaluations/Question%234342.md) by Claude 3.5 Sonnet.
+*   [Question#4342.md](mmlu-pro--4o-mini--flash-1-5/answers/chemistry/Question%234342.md): In this `chemistry` question example, both models were incorrect in their initial calculations and arrived at different answers, however, after the discussion, they both arrived at the correct answer. Check the transcript [evaluation](mmlu-pro--4o-mini--flash-1-5/evaluations/Question%234342.md) by Claude 3.5 Sonnet.
+
+_Please Note_: I have relied on Claude 3.5 Sonnet for evaluating certain transcripts above. However, expert opinion is welcome.
+_Further Note_: There are examples where models correctly arrived at the answer, however, their methodology was incorrect. Also, for some questions, the models return different answers during different runs.
 
 #### Sample Run Command for MMLU PRO
 
@@ -181,6 +184,8 @@ python src/run_mmlu_pro.py -m1 openai/gpt-4o-mini -m2 google/gemini-flash-1.5 -s
 ## Limitations
 
 This approach doesn't magically improve the underlying models. If the models are themselves limited in their own understanding of the topic at hand, most likely the collaborative answer will also be incorrect. Sometimes a model returns the correct answer, but using incorrect logic. It gets highlighted through the discussion and the model gets confused and is no longer able to stay firm on the original answer.
+
+Also, sometimes the models return different answer, when re-taking the same question and user instructions.
 
 
 ## Contributing
