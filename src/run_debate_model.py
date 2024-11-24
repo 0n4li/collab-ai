@@ -1,40 +1,65 @@
+import argparse
+import sys
 from api.debate_api_model import DebateAPIModel
 
-def main():
-    # Test question and user instructions
-    test_question = "Let V be the set of all real polynomials p(x). Let transformations T, S be defined on V by T:p(x) -> xp(x) and S:p(x) -> p'(x) = d/dx p(x), and interpret (ST)(p(x)) as S(T(p(x))). Which of the following is true? "
-    answer_options = [ "ST + TS is the identity map of V onto itself.", "TS = 0", "ST = 1", "ST - TS = 0", "ST = T", "ST = 0", "ST = TS", "ST - TS is the identity map of V onto itself.", "TS = T", "ST = S" ]
-    user_instructions = "Let's think step by step."
+tempt = "Break the individual letters, index only the 'r's, and count."
+
+default_user_instructions = "Think step by step and provide a helpful response"
+default_model1_name = "openai/gpt-4o-mini"
+default_model2_name = "google/gemini-flash-1.5"
+
+
+def parse_args(args=None):
+    parser = argparse.ArgumentParser(description='Run Debate API Model Script')
+    parser.add_argument("--output_dir", "-o", type=str, default="example_results/")
+    parser.add_argument("--conversation_name", "-c", type=str, default=None)
+    parser.add_argument("--model1_name", "-m1", type=str, default=default_model1_name)
+    parser.add_argument("--model2_name", "-m2", type=str, default=default_model2_name)
+    parser.add_argument("--question", "-q", type=str, required=True)
+    parser.add_argument("--user_instructions", "-u", type=str, default=default_user_instructions)
+    
+    if args is None:
+        args = sys.argv[1:]
+    return parser.parse_args(args=args)
+    
+
+def main(args=None):
+    
+    # Parse the arguments
+    args = parse_args(args)
     
     # Initialize the debate model with two different AI models
-    
     debate_model = DebateAPIModel(
-        model1_name="openai/gpt-4o-mini",
-        model2_name="google/gemini-flash-1.5"
+        model1_name=args.model1_name,
+        model2_name=args.model2_name
     )
     
-    test_question = f"{test_question} {answer_options}"
-
     # Test question that could have different perspectives
-    print(f"\nQuestion: {test_question}")
-    print("\nThinking...\n")
+    print(f"Question: {args.question}")
+    if args.user_instructions != default_user_instructions:
+        print(f"User Instructions: {args.user_instructions}")
     
     # Get response and ensure we only print the first occurrence
-    full_response = debate_model.get_response(test_question, user_instructions=user_instructions)
+    full_response = debate_model.get_response(
+        args.question, 
+        user_instructions=args.user_instructions, 
+        log_dir=None if args.conversation_name is None else args.output_dir,
+        log_filename=None if args.conversation_name is None else f"{args.conversation_name}.md"
+    )
     
-    # Split on any duplicate content by finding where the content starts repeating
-    response_parts = full_response.split('\n\n')
-    seen = set()
-    unique_parts = []
+    # Print the response to console if not logged
+    if args.conversation_name is None:
+        print(f"="*50)
+        print(f"1. {args.model1_name} Response: ")
+        print(full_response[0])
+        print(f"-"*50)
+        print(f"2. {args.model2_name} Response: ")
+        print(full_response[1])
+        print(f"="*50)
     
-    for part in response_parts:
-        if part.strip() and part not in seen:
-            seen.add(part)
-            unique_parts.append(part)
-    
-    print('\n\n'.join(unique_parts))
-    
+    # Close the model
     debate_model.close()
 
 if __name__ == "__main__":
+    args = sys.argv[1:]
     main()
