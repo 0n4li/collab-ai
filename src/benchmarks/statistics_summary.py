@@ -2,6 +2,7 @@ import copy
 
 stats = {"corr": 0, "idk": 0, "na": 0, "wrong": 0, "total": 0, "acc": 0.0}
 agreement_stats = { "agree": 0, "disagree": 0, "total": 0, "pct": 0.0 }
+outcome_stats = { "wtc": 0, "ctw": 0, "wtw": 0, "ncc": 0, "ncw": 0 }
 
 def _calculate_accuracy(correct, total):
     """Helper function to calculate accuracy."""
@@ -33,6 +34,30 @@ def _add_prediction_stats(overall_dict, stats_dict):
     overall_dict["wrong"] += stats_dict.get("wrong", 0)
     _update_prediction_totals(overall_dict)
     
+
+def _update_outcome_stats(outcome_dict, init_pred, pred, answer):
+    if init_pred == pred:
+        if pred == answer:
+            outcome_dict["ncc"] += 1
+        else:
+            outcome_dict["ncw"] += 1
+    else:
+        if pred == answer:
+            outcome_dict["wtc"] += 1
+        else:
+            if init_pred == answer:
+                outcome_dict["ctw"] += 1
+            else:
+                outcome_dict["wtw"] += 1
+            
+
+def _add_outcome_stats(overall_outcome_dict, outcome_dict):
+    overall_outcome_dict["ncc"] += outcome_dict.get("ncc", 0)
+    overall_outcome_dict["ncw"] += outcome_dict.get("ncw", 0)
+    overall_outcome_dict["wtc"] += outcome_dict.get("wtc", 0)
+    overall_outcome_dict["ctw"] += outcome_dict.get("ctw", 0)
+    overall_outcome_dict["wtw"] += outcome_dict.get("wtw", 0)
+
     
 def _update_agreement_totals(agreement_dict):
     agreement_dict["total"] = agreement_dict["agree"] + agreement_dict["disagree"]
@@ -57,14 +82,15 @@ def _build_stats():
     global stats, agreement_stats
     stats_dict = copy.deepcopy(stats)
     model_stats = {
+        "init": copy.deepcopy(stats),
         "final": copy.deepcopy(stats),
-        "init": copy.deepcopy(stats)
+        "outcome": copy.deepcopy(outcome_stats)
     }
     model1_stats = copy.deepcopy(model_stats)
     model2_stats = copy.deepcopy(model_stats)
     agreement = {
+        "init": copy.deepcopy(agreement_stats),
         "final": copy.deepcopy(agreement_stats),
-        "init": copy.deepcopy(agreement_stats)
     }
     stats_dict["agreement"] = agreement
     stats_dict["model1"] = model1_stats
@@ -95,6 +121,10 @@ def calculate_subject_statistics(results):
             _update_prediction_stats(model1_stats["init"], answer, init_pred1)
             _update_prediction_stats(model2_stats["init"], answer, init_pred2)
             _update_agreement_stats(agreement["init"], init_pred1 == init_pred2)
+            
+        _update_outcome_stats(model1_stats["outcome"], init_pred1, pred1, answer)
+        _update_outcome_stats(model2_stats["outcome"], init_pred2, pred2, answer)
+        
 
     return subject_stats
 
@@ -113,5 +143,7 @@ def calculate_all_statistics(summary):
             _add_prediction_stats(model1_stats[phase], subject_stats["model1"][phase])
             _add_prediction_stats(model2_stats[phase], subject_stats["model2"][phase])
             _add_agreement_stats(agreement[phase], subject_stats["agreement"][phase])
+        _add_outcome_stats(model1_stats["outcome"], subject_stats["model1"]["outcome"])
+        _add_outcome_stats(model2_stats["outcome"], subject_stats["model2"]["outcome"])
     
     return overall_stats
