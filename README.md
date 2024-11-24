@@ -119,21 +119,25 @@ We ran the `DebateAPIModel` on 364 random questions from [MMLU-Pro dataset](http
 
 | Subject          |   Questions |   Correct | Accuracy   |   4o-mini Correct | 4o-mini Accuracy   |   1.5 Flash Correct | 1.5 Flash Accuracy   |
 |:-----------------|------------:|----------:|:-----------|------------------:|:-------------------|--------------------:|:---------------------|
-| overall          |         364 |       263 | 72.3%      |               243 | 66.8%              |                 239 | 65.7%                |
+| **overall**      |     **364** |   **263** | **72.3%**  |           **243** | **66.8%**          |             **239** | **65.7%**              |
 | biology          |          32 |        29 | 90.6%      |                27 | 84.4%              |                  27 | 84.4%                |
-| business         |          32 |        26 | 81.2%      |                23 | 71.9%              |                  25 | 78.1%                |
-| chemistry        |          31 |        25 | 80.6%      |                20 | 64.5%              |                  24 | 77.4%                |
+| business         |          32 |        26 | 81.2%      |                23 | 71.9%              |                  25 | **78.1%**              |
+| chemistry        |          31 |        25 | 80.6%      |                20 | 64.5%              |                  24 | **77.4%**              |
 | computer science |          17 |        15 | 88.2%      |                14 | 82.4%              |                  14 | 82.4%                |
-| economics        |          28 |        23 | 82.1%      |                22 | 78.6%              |                  21 | 75.0%                |
-| engineering      |          17 |        10 | 58.8%      |                 7 | 41.2%              |                   9 | 52.9%                |
-| health           |          32 |        22 | 68.8%      |                20 | 62.5%              |                  18 | 56.2%                |
-| history          |          30 |        20 | 66.7%      |                20 | 66.7%              |                  17 | 56.7%                |
-| law              |          31 |         8 | 25.8%      |                 8 | 25.8%              |                   9 | 29.0%                |
-| math             |          17 |        16 | 94.1%      |                17 | 100.0%             |                  15 | 88.2%                |
-| other            |          32 |        24 | 75.0%      |                23 | 71.9%              |                  21 | 65.6%                |
-| philosophy       |          17 |         8 | 47.1%      |                 8 | 47.1%              |                   7 | 41.2%                |
+| economics        |          28 |        23 | 82.1%      |                22 | **78.6%**          |                  21 | 75.0%                |
+| engineering      |          17 |        10 | 58.8%      |                 7 | 41.2%              |                   9 | **52.9%**              |
+| health           |          32 |        22 | 68.8%      |                20 | **62.5%**          |                  18 | 56.2%                |
+| history          |          30 |        20 | 66.7%      |                20 | **66.7%**          |                  17 | 56.7%                |
+| law              |          31 |         8 | 25.8%      |                 8 | 25.8%              |                   9 | **29.0%**              |
+| math             |          17 |        16 | 94.1%      |                17 | **100.0%**         |                  15 | 88.2%                |
+| other            |          32 |        24 | 75.0%      |                23 | **71.9%**          |                  21 | 65.6%                |
+| philosophy       |          17 |         8 | 47.1%      |                 8 | **47.1%**          |                   7 | 41.2%                |
 | physics          |          17 |        13 | 76.5%      |                11 | 64.7%              |                  11 | 64.7%                |
-| psychology       |          31 |        24 | 77.4%      |                23 | 74.2%              |                  21 | 67.7%                |
+| psychology       |          31 |        24 | 77.4%      |                23 | **74.2%**          |                  21 | 67.7%                |
+
+*   The transcripts of all the 364 questions can be found [here](mmlu-pro--4o-mini--flash-1-5/answers/).
+*   The detailed statistics can be found [here](mmlu-pro--4o-mini--flash-1-5/results_summary.json).
+*   _Please Note_: Some questions were re-taken as we improved the prompts.
 
 #### Sample Run Command for MMLU PRO
 
