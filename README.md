@@ -151,7 +151,7 @@ We ran the `DebateAPIModel` on 364 random questions from [MMLU-Pro dataset](http
 
 _Please Note_: I have relied on Claude 3.5 Sonnet for evaluating certain transcripts above. However, expert opinion is welcome.
 
-_Further Note_: There are examples where models correctly arrived at the answer, however, their methodology was incorrect. Also, for some questions, the models return different answers during different runs.
+_Further Note_: There are examples where models correctly arrived at the answer initially, however, their methodology was incorrect. Also, for some questions, the models return different answers during different runs.
 
 #### Sample Run Command for MMLU PRO
 
