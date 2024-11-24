@@ -1,736 +1,871 @@
 {
   "overall": {
-    "corr": 219,
-    "na": 15,
-    "wrong": 102,
-    "total": 336,
-    "acc": 0.6517857142857143,
-    "model1": {
+    "corr": 263,
+    "idk": 12,
+    "na": 3,
+    "wrong": 86,
+    "total": 364,
+    "acc": 0.7225274725274725,
+    "agreement": {
       "final": {
-        "corr": 219,
-        "na": 15,
-        "wrong": 102,
-        "total": 336,
-        "acc": 0.6517857142857143
+        "agree": 361,
+        "disagree": 3,
+        "total": 364,
+        "pct": 0.9917582417582418
       },
       "init": {
-        "corr": 220,
-        "na": 10,
-        "wrong": 106,
-        "total": 336,
-        "acc": 0.6547619047619048
+        "agree": 272,
+        "disagree": 92,
+        "total": 364,
+        "pct": 0.7472527472527473
+      }
+    },
+    "model1": {
+      "final": {
+        "corr": 263,
+        "idk": 11,
+        "na": 4,
+        "wrong": 86,
+        "total": 364,
+        "acc": 0.7225274725274725
+      },
+      "init": {
+        "corr": 243,
+        "idk": 11,
+        "na": 3,
+        "wrong": 107,
+        "total": 364,
+        "acc": 0.6675824175824175
       }
     },
     "model2": {
       "final": {
-        "corr": 219,
-        "na": 15,
-        "wrong": 102,
-        "total": 336,
-        "acc": 0.6517857142857143
+        "corr": 265,
+        "idk": 12,
+        "na": 1,
+        "wrong": 86,
+        "total": 364,
+        "acc": 0.728021978021978
       },
       "init": {
-        "corr": 217,
-        "na": 18,
+        "corr": 239,
+        "idk": 22,
+        "na": 2,
         "wrong": 101,
-        "total": 336,
-        "acc": 0.6458333333333334
-      }
-    },
-    "agreement": {
-      "final": {
-        "agree": 335,
-        "disagree": 1
-      },
-      "init": {
-        "agree": 236,
-        "disagree": 100
+        "total": 364,
+        "acc": 0.6565934065934066
       }
     }
   },
   "biology": {
-    "corr": 27,
+    "corr": 29,
+    "idk": 0,
     "na": 0,
     "wrong": 3,
-    "total": 30,
-    "acc": 0.9,
+    "total": 32,
+    "acc": 0.90625,
     "agreement": {
       "final": {
-        "agree": 30,
-        "disagree": 0
+        "agree": 32,
+        "disagree": 0,
+        "total": 32,
+        "pct": 1.0
       },
       "init": {
-        "agree": 24,
-        "disagree": 6
+        "agree": 26,
+        "disagree": 6,
+        "total": 32,
+        "pct": 0.8125
       }
     },
     "model1": {
       "final": {
-        "corr": 27,
+        "corr": 29,
+        "idk": 0,
         "na": 0,
         "wrong": 3,
-        "total": 30,
-        "acc": 0.9
+        "total": 32,
+        "acc": 0.90625
       },
       "init": {
-        "corr": 25,
+        "corr": 27,
+        "idk": 1,
         "na": 0,
-        "wrong": 5,
-        "total": 30,
-        "acc": 0.8333333333333334
+        "wrong": 4,
+        "total": 32,
+        "acc": 0.84375
       }
     },
     "model2": {
       "final": {
-        "corr": 27,
+        "corr": 29,
+        "idk": 0,
         "na": 0,
         "wrong": 3,
-        "total": 30,
-        "acc": 0.9
+        "total": 32,
+        "acc": 0.90625
       },
       "init": {
-        "corr": 26,
+        "corr": 27,
+        "idk": 0,
         "na": 0,
-        "wrong": 4,
-        "total": 30,
-        "acc": 0.8666666666666667
+        "wrong": 5,
+        "total": 32,
+        "acc": 0.84375
       }
     }
   },
   "business": {
-    "corr": 21,
-    "na": 3,
-    "wrong": 6,
-    "total": 30,
-    "acc": 0.7,
+    "corr": 26,
+    "idk": 3,
+    "na": 0,
+    "wrong": 3,
+    "total": 32,
+    "acc": 0.8125,
     "agreement": {
       "final": {
-        "agree": 30,
-        "disagree": 0
+        "agree": 31,
+        "disagree": 1,
+        "total": 32,
+        "pct": 0.96875
       },
       "init": {
-        "agree": 21,
-        "disagree": 9
+        "agree": 23,
+        "disagree": 9,
+        "total": 32,
+        "pct": 0.71875
       }
     },
     "model1": {
       "final": {
-        "corr": 21,
-        "na": 3,
-        "wrong": 6,
-        "total": 30,
-        "acc": 0.7
+        "corr": 26,
+        "idk": 2,
+        "na": 1,
+        "wrong": 3,
+        "total": 32,
+        "acc": 0.8125
       },
       "init": {
-        "corr": 21,
-        "na": 3,
-        "wrong": 6,
-        "total": 30,
-        "acc": 0.7
+        "corr": 23,
+        "idk": 3,
+        "na": 1,
+        "wrong": 5,
+        "total": 32,
+        "acc": 0.71875
       }
     },
     "model2": {
       "final": {
-        "corr": 21,
-        "na": 3,
-        "wrong": 6,
-        "total": 30,
-        "acc": 0.7
+        "corr": 26,
+        "idk": 3,
+        "na": 0,
+        "wrong": 3,
+        "total": 32,
+        "acc": 0.8125
       },
       "init": {
-        "corr": 24,
-        "na": 3,
+        "corr": 25,
+        "idk": 3,
+        "na": 1,
         "wrong": 3,
-        "total": 30,
-        "acc": 0.8
+        "total": 32,
+        "acc": 0.78125
       }
     }
   },
   "chemistry": {
-    "corr": 21,
-    "na": 2,
-    "wrong": 6,
-    "total": 29,
-    "acc": 0.7241379310344828,
+    "corr": 25,
+    "idk": 0,
+    "na": 1,
+    "wrong": 5,
+    "total": 31,
+    "acc": 0.8064516129032258,
     "agreement": {
       "final": {
-        "agree": 29,
-        "disagree": 0
+        "agree": 30,
+        "disagree": 1,
+        "total": 31,
+        "pct": 0.967741935483871
       },
       "init": {
-        "agree": 20,
-        "disagree": 9
+        "agree": 23,
+        "disagree": 8,
+        "total": 31,
+        "pct": 0.7419354838709677
       }
     },
     "model1": {
       "final": {
-        "corr": 21,
-        "na": 2,
-        "wrong": 6,
-        "total": 29,
-        "acc": 0.7241379310344828
+        "corr": 25,
+        "idk": 0,
+        "na": 1,
+        "wrong": 5,
+        "total": 31,
+        "acc": 0.8064516129032258
       },
       "init": {
-        "corr": 18,
-        "na": 2,
+        "corr": 20,
+        "idk": 1,
+        "na": 1,
         "wrong": 9,
-        "total": 29,
-        "acc": 0.6206896551724138
+        "total": 31,
+        "acc": 0.6451612903225806
       }
     },
     "model2": {
       "final": {
-        "corr": 21,
-        "na": 2,
-        "wrong": 6,
-        "total": 29,
-        "acc": 0.7241379310344828
+        "corr": 26,
+        "idk": 0,
+        "na": 0,
+        "wrong": 5,
+        "total": 31,
+        "acc": 0.8387096774193549
       },
       "init": {
-        "corr": 21,
-        "na": 2,
+        "corr": 24,
+        "idk": 1,
+        "na": 0,
         "wrong": 6,
-        "total": 29,
-        "acc": 0.7241379310344828
+        "total": 31,
+        "acc": 0.7741935483870968
       }
     }
   },
   "computer science": {
-    "corr": 12,
-    "na": 1,
-    "wrong": 2,
-    "total": 15,
-    "acc": 0.8,
+    "corr": 15,
+    "idk": 1,
+    "na": 0,
+    "wrong": 1,
+    "total": 17,
+    "acc": 0.8823529411764706,
     "agreement": {
       "final": {
-        "agree": 15,
-        "disagree": 0
+        "agree": 17,
+        "disagree": 0,
+        "total": 17,
+        "pct": 1.0
       },
       "init": {
-        "agree": 12,
-        "disagree": 3
+        "agree": 14,
+        "disagree": 3,
+        "total": 17,
+        "pct": 0.8235294117647058
       }
     },
     "model1": {
       "final": {
-        "corr": 12,
-        "na": 1,
-        "wrong": 2,
-        "total": 15,
-        "acc": 0.8
+        "corr": 15,
+        "idk": 1,
+        "na": 0,
+        "wrong": 1,
+        "total": 17,
+        "acc": 0.8823529411764706
       },
       "init": {
-        "corr": 12,
-        "na": 1,
+        "corr": 14,
+        "idk": 1,
+        "na": 0,
         "wrong": 2,
-        "total": 15,
-        "acc": 0.8
+        "total": 17,
+        "acc": 0.8235294117647058
       }
     },
     "model2": {
       "final": {
-        "corr": 12,
-        "na": 1,
-        "wrong": 2,
-        "total": 15,
-        "acc": 0.8
+        "corr": 15,
+        "idk": 1,
+        "na": 0,
+        "wrong": 1,
+        "total": 17,
+        "acc": 0.8823529411764706
       },
       "init": {
-        "corr": 12,
-        "na": 1,
+        "corr": 14,
+        "idk": 1,
+        "na": 0,
         "wrong": 2,
-        "total": 15,
-        "acc": 0.8
+        "total": 17,
+        "acc": 0.8235294117647058
       }
     }
   },
   "economics": {
-    "corr": 21,
-    "na": 2,
+    "corr": 23,
+    "idk": 2,
+    "na": 0,
     "wrong": 3,
-    "total": 26,
-    "acc": 0.8076923076923077,
+    "total": 28,
+    "acc": 0.8214285714285714,
     "agreement": {
       "final": {
-        "agree": 26,
-        "disagree": 0
+        "agree": 28,
+        "disagree": 0,
+        "total": 28,
+        "pct": 1.0
       },
       "init": {
-        "agree": 21,
-        "disagree": 5
+        "agree": 24,
+        "disagree": 4,
+        "total": 28,
+        "pct": 0.8571428571428571
       }
     },
     "model1": {
       "final": {
-        "corr": 21,
-        "na": 2,
+        "corr": 23,
+        "idk": 2,
+        "na": 0,
         "wrong": 3,
-        "total": 26,
-        "acc": 0.8076923076923077
+        "total": 28,
+        "acc": 0.8214285714285714
       },
       "init": {
-        "corr": 21,
-        "na": 2,
-        "wrong": 3,
-        "total": 26,
-        "acc": 0.8076923076923077
+        "corr": 22,
+        "idk": 2,
+        "na": 0,
+        "wrong": 4,
+        "total": 28,
+        "acc": 0.7857142857142857
       }
     },
     "model2": {
       "final": {
-        "corr": 21,
-        "na": 2,
+        "corr": 23,
+        "idk": 2,
+        "na": 0,
         "wrong": 3,
-        "total": 26,
-        "acc": 0.8076923076923077
+        "total": 28,
+        "acc": 0.8214285714285714
       },
       "init": {
-        "corr": 19,
-        "na": 1,
+        "corr": 21,
+        "idk": 1,
+        "na": 0,
         "wrong": 6,
-        "total": 26,
-        "acc": 0.7307692307692307
+        "total": 28,
+        "acc": 0.75
       }
     }
   },
   "engineering": {
-    "corr": 5,
-    "na": 4,
-    "wrong": 6,
-    "total": 15,
-    "acc": 0.3333333333333333,
+    "corr": 10,
+    "idk": 3,
+    "na": 0,
+    "wrong": 4,
+    "total": 17,
+    "acc": 0.5882352941176471,
     "agreement": {
       "final": {
-        "agree": 15,
-        "disagree": 0
+        "agree": 17,
+        "disagree": 0,
+        "total": 17,
+        "pct": 1.0
       },
       "init": {
-        "agree": 5,
-        "disagree": 10
+        "agree": 9,
+        "disagree": 8,
+        "total": 17,
+        "pct": 0.5294117647058824
       }
     },
     "model1": {
       "final": {
-        "corr": 5,
-        "na": 4,
-        "wrong": 6,
-        "total": 15,
-        "acc": 0.3333333333333333
+        "corr": 10,
+        "idk": 3,
+        "na": 0,
+        "wrong": 4,
+        "total": 17,
+        "acc": 0.5882352941176471
       },
       "init": {
         "corr": 7,
+        "idk": 1,
         "na": 0,
-        "wrong": 8,
-        "total": 15,
-        "acc": 0.4666666666666667
+        "wrong": 9,
+        "total": 17,
+        "acc": 0.4117647058823529
       }
     },
     "model2": {
       "final": {
-        "corr": 5,
-        "na": 4,
-        "wrong": 6,
-        "total": 15,
-        "acc": 0.3333333333333333
+        "corr": 10,
+        "idk": 3,
+        "na": 0,
+        "wrong": 4,
+        "total": 17,
+        "acc": 0.5882352941176471
       },
       "init": {
-        "corr": 6,
-        "na": 6,
-        "wrong": 3,
-        "total": 15,
-        "acc": 0.4
+        "corr": 9,
+        "idk": 7,
+        "na": 0,
+        "wrong": 1,
+        "total": 17,
+        "acc": 0.5294117647058824
       }
     }
   },
   "health": {
-    "corr": 19,
+    "corr": 22,
+    "idk": 0,
     "na": 0,
-    "wrong": 11,
-    "total": 30,
-    "acc": 0.6333333333333333,
+    "wrong": 10,
+    "total": 32,
+    "acc": 0.6875,
     "agreement": {
       "final": {
-        "agree": 30,
-        "disagree": 0
+        "agree": 32,
+        "disagree": 0,
+        "total": 32,
+        "pct": 1.0
       },
       "init": {
-        "agree": 21,
-        "disagree": 9
+        "agree": 24,
+        "disagree": 8,
+        "total": 32,
+        "pct": 0.75
       }
     },
     "model1": {
       "final": {
-        "corr": 19,
+        "corr": 22,
+        "idk": 0,
         "na": 0,
-        "wrong": 11,
-        "total": 30,
-        "acc": 0.6333333333333333
+        "wrong": 10,
+        "total": 32,
+        "acc": 0.6875
       },
       "init": {
-        "corr": 16,
+        "corr": 20,
+        "idk": 0,
         "na": 0,
-        "wrong": 14,
-        "total": 30,
-        "acc": 0.5333333333333333
+        "wrong": 12,
+        "total": 32,
+        "acc": 0.625
       }
     },
     "model2": {
       "final": {
-        "corr": 19,
+        "corr": 22,
+        "idk": 0,
         "na": 0,
-        "wrong": 11,
-        "total": 30,
-        "acc": 0.6333333333333333
+        "wrong": 10,
+        "total": 32,
+        "acc": 0.6875
       },
       "init": {
-        "corr": 17,
+        "corr": 18,
+        "idk": 1,
         "na": 0,
         "wrong": 13,
-        "total": 30,
-        "acc": 0.5666666666666667
+        "total": 32,
+        "acc": 0.5625
       }
     }
   },
   "history": {
-    "corr": 18,
-    "na": 1,
-    "wrong": 9,
-    "total": 28,
-    "acc": 0.6428571428571429,
-    "agreement": {
-      "final": {
-        "agree": 28,
-        "disagree": 0
-      },
-      "init": {
-        "agree": 23,
-        "disagree": 5
-      }
-    },
-    "model1": {
-      "final": {
-        "corr": 18,
-        "na": 1,
-        "wrong": 9,
-        "total": 28,
-        "acc": 0.6428571428571429
-      },
-      "init": {
-        "corr": 18,
-        "na": 0,
-        "wrong": 10,
-        "total": 28,
-        "acc": 0.6428571428571429
-      }
-    },
-    "model2": {
-      "final": {
-        "corr": 18,
-        "na": 1,
-        "wrong": 9,
-        "total": 28,
-        "acc": 0.6428571428571429
-      },
-      "init": {
-        "corr": 16,
-        "na": 1,
-        "wrong": 11,
-        "total": 28,
-        "acc": 0.5714285714285714
-      }
-    }
-  },
-  "law": {
-    "corr": 5,
-    "na": 1,
-    "wrong": 23,
-    "total": 29,
-    "acc": 0.1724137931034483,
-    "agreement": {
-      "final": {
-        "agree": 29,
-        "disagree": 0
-      },
-      "init": {
-        "agree": 12,
-        "disagree": 17
-      }
-    },
-    "model1": {
-      "final": {
-        "corr": 5,
-        "na": 1,
-        "wrong": 23,
-        "total": 29,
-        "acc": 0.1724137931034483
-      },
-      "init": {
-        "corr": 10,
-        "na": 0,
-        "wrong": 19,
-        "total": 29,
-        "acc": 0.3448275862068966
-      }
-    },
-    "model2": {
-      "final": {
-        "corr": 5,
-        "na": 1,
-        "wrong": 23,
-        "total": 29,
-        "acc": 0.1724137931034483
-      },
-      "init": {
-        "corr": 8,
-        "na": 0,
-        "wrong": 21,
-        "total": 29,
-        "acc": 0.27586206896551724
-      }
-    }
-  },
-  "math": {
-    "corr": 14,
-    "na": 0,
-    "wrong": 1,
-    "total": 15,
-    "acc": 0.9333333333333333,
-    "agreement": {
-      "final": {
-        "agree": 15,
-        "disagree": 0
-      },
-      "init": {
-        "agree": 14,
-        "disagree": 1
-      }
-    },
-    "model1": {
-      "final": {
-        "corr": 14,
-        "na": 0,
-        "wrong": 1,
-        "total": 15,
-        "acc": 0.9333333333333333
-      },
-      "init": {
-        "corr": 15,
-        "na": 0,
-        "wrong": 0,
-        "total": 15,
-        "acc": 1.0
-      }
-    },
-    "model2": {
-      "final": {
-        "corr": 14,
-        "na": 0,
-        "wrong": 1,
-        "total": 15,
-        "acc": 0.9333333333333333
-      },
-      "init": {
-        "corr": 14,
-        "na": 0,
-        "wrong": 1,
-        "total": 15,
-        "acc": 0.9333333333333333
-      }
-    }
-  },
-  "other": {
     "corr": 20,
-    "na": 1,
+    "idk": 1,
+    "na": 0,
     "wrong": 9,
     "total": 30,
     "acc": 0.6666666666666666,
     "agreement": {
       "final": {
         "agree": 30,
-        "disagree": 0
+        "disagree": 0,
+        "total": 30,
+        "pct": 1.0
       },
       "init": {
-        "agree": 25,
-        "disagree": 5
+        "agree": 24,
+        "disagree": 6,
+        "total": 30,
+        "pct": 0.8
       }
     },
     "model1": {
       "final": {
         "corr": 20,
-        "na": 1,
+        "idk": 1,
+        "na": 0,
         "wrong": 9,
         "total": 30,
         "acc": 0.6666666666666666
       },
       "init": {
-        "corr": 22,
+        "corr": 20,
+        "idk": 0,
         "na": 0,
-        "wrong": 8,
+        "wrong": 10,
         "total": 30,
-        "acc": 0.7333333333333333
+        "acc": 0.6666666666666666
       }
     },
     "model2": {
       "final": {
         "corr": 20,
-        "na": 1,
+        "idk": 1,
+        "na": 0,
         "wrong": 9,
         "total": 30,
         "acc": 0.6666666666666666
       },
       "init": {
-        "corr": 21,
-        "na": 2,
-        "wrong": 7,
+        "corr": 17,
+        "idk": 2,
+        "na": 0,
+        "wrong": 11,
         "total": 30,
-        "acc": 0.7
+        "acc": 0.5666666666666667
+      }
+    }
+  },
+  "law": {
+    "corr": 8,
+    "idk": 1,
+    "na": 1,
+    "wrong": 21,
+    "total": 31,
+    "acc": 0.25806451612903225,
+    "agreement": {
+      "final": {
+        "agree": 31,
+        "disagree": 0,
+        "total": 31,
+        "pct": 1.0
+      },
+      "init": {
+        "agree": 18,
+        "disagree": 13,
+        "total": 31,
+        "pct": 0.5806451612903226
+      }
+    },
+    "model1": {
+      "final": {
+        "corr": 8,
+        "idk": 1,
+        "na": 1,
+        "wrong": 21,
+        "total": 31,
+        "acc": 0.25806451612903225
+      },
+      "init": {
+        "corr": 8,
+        "idk": 0,
+        "na": 1,
+        "wrong": 22,
+        "total": 31,
+        "acc": 0.25806451612903225
+      }
+    },
+    "model2": {
+      "final": {
+        "corr": 8,
+        "idk": 1,
+        "na": 1,
+        "wrong": 21,
+        "total": 31,
+        "acc": 0.25806451612903225
+      },
+      "init": {
+        "corr": 9,
+        "idk": 0,
+        "na": 0,
+        "wrong": 22,
+        "total": 31,
+        "acc": 0.2903225806451613
+      }
+    }
+  },
+  "math": {
+    "corr": 16,
+    "idk": 0,
+    "na": 1,
+    "wrong": 0,
+    "total": 17,
+    "acc": 0.9411764705882353,
+    "agreement": {
+      "final": {
+        "agree": 16,
+        "disagree": 1,
+        "total": 17,
+        "pct": 0.9411764705882353
+      },
+      "init": {
+        "agree": 15,
+        "disagree": 2,
+        "total": 17,
+        "pct": 0.8823529411764706
+      }
+    },
+    "model1": {
+      "final": {
+        "corr": 16,
+        "idk": 0,
+        "na": 1,
+        "wrong": 0,
+        "total": 17,
+        "acc": 0.9411764705882353
+      },
+      "init": {
+        "corr": 17,
+        "idk": 0,
+        "na": 0,
+        "wrong": 0,
+        "total": 17,
+        "acc": 1.0
+      }
+    },
+    "model2": {
+      "final": {
+        "corr": 17,
+        "idk": 0,
+        "na": 0,
+        "wrong": 0,
+        "total": 17,
+        "acc": 1.0
+      },
+      "init": {
+        "corr": 15,
+        "idk": 1,
+        "na": 0,
+        "wrong": 1,
+        "total": 17,
+        "acc": 0.8823529411764706
+      }
+    }
+  },
+  "other": {
+    "corr": 24,
+    "idk": 1,
+    "na": 0,
+    "wrong": 7,
+    "total": 32,
+    "acc": 0.75,
+    "agreement": {
+      "final": {
+        "agree": 32,
+        "disagree": 0,
+        "total": 32,
+        "pct": 1.0
+      },
+      "init": {
+        "agree": 26,
+        "disagree": 6,
+        "total": 32,
+        "pct": 0.8125
+      }
+    },
+    "model1": {
+      "final": {
+        "corr": 24,
+        "idk": 1,
+        "na": 0,
+        "wrong": 7,
+        "total": 32,
+        "acc": 0.75
+      },
+      "init": {
+        "corr": 23,
+        "idk": 1,
+        "na": 0,
+        "wrong": 8,
+        "total": 32,
+        "acc": 0.71875
+      }
+    },
+    "model2": {
+      "final": {
+        "corr": 24,
+        "idk": 1,
+        "na": 0,
+        "wrong": 7,
+        "total": 32,
+        "acc": 0.75
+      },
+      "init": {
+        "corr": 21,
+        "idk": 2,
+        "na": 0,
+        "wrong": 9,
+        "total": 32,
+        "acc": 0.65625
       }
     }
   },
   "philosophy": {
-    "corr": 7,
+    "corr": 8,
+    "idk": 0,
     "na": 0,
-    "wrong": 8,
-    "total": 15,
-    "acc": 0.4666666666666667,
+    "wrong": 9,
+    "total": 17,
+    "acc": 0.47058823529411764,
     "agreement": {
       "final": {
-        "agree": 14,
-        "disagree": 1
+        "agree": 17,
+        "disagree": 0,
+        "total": 17,
+        "pct": 1.0
       },
       "init": {
-        "agree": 10,
-        "disagree": 5
+        "agree": 12,
+        "disagree": 5,
+        "total": 17,
+        "pct": 0.7058823529411765
       }
     },
     "model1": {
       "final": {
-        "corr": 7,
+        "corr": 8,
+        "idk": 0,
         "na": 0,
-        "wrong": 8,
-        "total": 15,
-        "acc": 0.4666666666666667
+        "wrong": 9,
+        "total": 17,
+        "acc": 0.47058823529411764
       },
       "init": {
-        "corr": 6,
-        "na": 1,
-        "wrong": 8,
-        "total": 15,
-        "acc": 0.4
+        "corr": 8,
+        "idk": 0,
+        "na": 0,
+        "wrong": 9,
+        "total": 17,
+        "acc": 0.47058823529411764
       }
     },
     "model2": {
       "final": {
-        "corr": 7,
+        "corr": 8,
+        "idk": 0,
         "na": 0,
-        "wrong": 8,
-        "total": 15,
-        "acc": 0.4666666666666667
+        "wrong": 9,
+        "total": 17,
+        "acc": 0.47058823529411764
       },
       "init": {
-        "corr": 5,
-        "na": 0,
-        "wrong": 10,
-        "total": 15,
-        "acc": 0.3333333333333333
+        "corr": 7,
+        "idk": 0,
+        "na": 1,
+        "wrong": 9,
+        "total": 17,
+        "acc": 0.4117647058823529
       }
     }
   },
   "physics": {
-    "corr": 11,
+    "corr": 13,
+    "idk": 0,
     "na": 0,
     "wrong": 4,
-    "total": 15,
-    "acc": 0.7333333333333333,
+    "total": 17,
+    "acc": 0.7647058823529411,
     "agreement": {
       "final": {
-        "agree": 15,
-        "disagree": 0
+        "agree": 17,
+        "disagree": 0,
+        "total": 17,
+        "pct": 1.0
       },
       "init": {
-        "agree": 8,
-        "disagree": 7
+        "agree": 10,
+        "disagree": 7,
+        "total": 17,
+        "pct": 0.5882352941176471
       }
     },
     "model1": {
       "final": {
-        "corr": 11,
+        "corr": 13,
+        "idk": 0,
         "na": 0,
         "wrong": 4,
-        "total": 15,
-        "acc": 0.7333333333333333
+        "total": 17,
+        "acc": 0.7647058823529411
       },
       "init": {
-        "corr": 9,
-        "na": 1,
+        "corr": 11,
+        "idk": 1,
+        "na": 0,
         "wrong": 5,
-        "total": 15,
-        "acc": 0.6
+        "total": 17,
+        "acc": 0.6470588235294118
       }
     },
     "model2": {
       "final": {
-        "corr": 11,
+        "corr": 13,
+        "idk": 0,
         "na": 0,
         "wrong": 4,
-        "total": 15,
-        "acc": 0.7333333333333333
+        "total": 17,
+        "acc": 0.7647058823529411
       },
       "init": {
-        "corr": 10,
-        "na": 1,
+        "corr": 11,
+        "idk": 2,
+        "na": 0,
         "wrong": 4,
-        "total": 15,
-        "acc": 0.6666666666666666
+        "total": 17,
+        "acc": 0.6470588235294118
       }
     }
   },
   "psychology": {
-    "corr": 18,
+    "corr": 24,
+    "idk": 0,
     "na": 0,
-    "wrong": 11,
-    "total": 29,
-    "acc": 0.6206896551724138,
+    "wrong": 7,
+    "total": 31,
+    "acc": 0.7741935483870968,
     "agreement": {
       "final": {
-        "agree": 29,
-        "disagree": 0
+        "agree": 31,
+        "disagree": 0,
+        "total": 31,
+        "pct": 1.0
       },
       "init": {
-        "agree": 20,
-        "disagree": 9
+        "agree": 24,
+        "disagree": 7,
+        "total": 31,
+        "pct": 0.7741935483870968
       }
     },
     "model1": {
       "final": {
-        "corr": 18,
+        "corr": 24,
+        "idk": 0,
         "na": 0,
-        "wrong": 11,
-        "total": 29,
-        "acc": 0.6206896551724138
+        "wrong": 7,
+        "total": 31,
+        "acc": 0.7741935483870968
       },
       "init": {
-        "corr": 20,
+        "corr": 23,
+        "idk": 0,
         "na": 0,
-        "wrong": 9,
-        "total": 29,
-        "acc": 0.6896551724137931
+        "wrong": 8,
+        "total": 31,
+        "acc": 0.7419354838709677
       }
     },
     "model2": {
       "final": {
-        "corr": 18,
+        "corr": 24,
+        "idk": 0,
         "na": 0,
-        "wrong": 11,
-        "total": 29,
-        "acc": 0.6206896551724138
+        "wrong": 7,
+        "total": 31,
+        "acc": 0.7741935483870968
       },
       "init": {
-        "corr": 18,
-        "na": 1,
-        "wrong": 10,
-        "total": 29,
-        "acc": 0.6206896551724138
+        "corr": 21,
+        "idk": 1,
+        "na": 0,
+        "wrong": 9,
+        "total": 31,
+        "acc": 0.6774193548387096
       }
     }
   }
