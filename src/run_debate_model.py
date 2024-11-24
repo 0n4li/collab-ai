@@ -11,7 +11,7 @@ default_model2_name = "google/gemini-flash-1.5"
 
 def parse_args(args=None):
     parser = argparse.ArgumentParser(description='Run Debate API Model Script')
-    parser.add_argument("--output_dir", "-o", type=str, default="example_results/")
+    parser.add_argument("--output_dir", "-o", type=str, default="../example_results/")
     parser.add_argument("--conversation_name", "-c", type=str, default=None)
     parser.add_argument("--model1_name", "-m1", type=str, default=default_model1_name)
     parser.add_argument("--model2_name", "-m2", type=str, default=default_model2_name)
