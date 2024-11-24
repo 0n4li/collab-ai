@@ -10,7 +10,7 @@ logger = setup_app_logger(__name__)
 separater = "\n---\n\n"
 
 class DebateAPIModel:
-    def __init__(self, model1_name: str, model2_name: str, min_rounds: int = 1, max_rounds: int = 5):
+    def __init__(self, model1_name: str, model2_name: str, min_rounds: int = 2, max_rounds: int = 5):
         """
         Initialize two AI models for natural dialogue-based discussion.
 
@@ -158,7 +158,7 @@ class DebateAPIModel:
             print(f"‣ {self.model2_name} agreement status - {status2} - after round {current_round + 1}")
 
             # Update agreement status based on both models' responses
-            if status1 == "agree" and status2 == "agree" and (current_round + 1) > self.min_discussion_rounds:
+            if status1 == "agree" and status2 == "agree" and (current_round + 1) >= self.min_discussion_rounds:
                 agreement_status = "agree"
                 break
             
