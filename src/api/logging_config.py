@@ -205,6 +205,8 @@ def setup_conversation_logger(
     """
     try:
         log_dir = log_dir or CONVERSATION_LOG_DIR
+        if type(log_dir) == str:
+            log_dir = Path(log_dir)
         ensure_directory(log_dir)
         
         # Generate logger name and file path
@@ -243,4 +245,6 @@ def get_app_logs_path() -> Path:
 
 def setup_noop_logger() -> logging.Logger:
     """Set up a no-operation logger that doesn't output anything."""
-    return logging.getLogger("noop")
+    logger = logging.getLogger("noop")
+    logger.addHandler(logging.NullHandler())
+    return logger
