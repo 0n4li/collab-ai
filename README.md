@@ -65,7 +65,7 @@ In the above usage, default models `openai/gpt-4o-mini` and `google/gemini-flash
 
 **Below are a few sample outputs:**
 *   [r-in-strawberry.md](example_results/r-in-strawberry.md): Initially `google/gemini-flash-1.5` gives an incorrect count of the 'r's. However, it is corrected by `openai/gpt-4o-mini`. Eventually, both return the correct answer.
-*   [r-in-mulbrerry.md](example_results/r-in-mullberry.md): Initially `openai/gpt4o-mini` gives an incorrect count of the 'r's by assuming the word `mulberry`. However, it is corrected by `google/gemini-flash-1.5` that the word is `mulbrerry`. Eventually, both return the correct answer.
+*   [r-in-mulbrerry.md](example_results/r-in-mulbrerry.md): Initially `openai/gpt4o-mini` gives an incorrect count of the 'r's by assuming the word `mulberry`. However, it is corrected by `google/gemini-flash-1.5` that the word is `mulbrerry`. Eventually, both return the correct answer.
 *   [s-in-strawberry.md](example_results/s-in-strawberry.md): Both models return the correct answer initially and in collaboration as well.
 
 _Please Note_: The `user_instructions` play a very important role in the outcome.
